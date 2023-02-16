@@ -7,6 +7,10 @@ __pycache__/
 *demo.py
 # 去除json文件
 user_data.json
+# 去除所有xml
+*.xml
+# 去除所有的iml
+*.iml
 
 
 # C extensions
