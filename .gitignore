@@ -5,6 +5,9 @@ __pycache__/
 
 # 所有测试不上传  后缀为demo
 *demo.py
+# 去除json文件
+user_data.json
+
 
 # C extensions
 *.so
