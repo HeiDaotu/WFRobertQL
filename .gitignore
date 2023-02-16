@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# 所有测试不上传  后缀为demo
+*-demo.py
+
 # C extensions
 *.so
 
