@@ -12,7 +12,7 @@
 
 **值：**自己从ddnsto的控制台F12获取
 
-![image-20230217095158313](C:\Users\wuban\AppData\Roaming\Typora\typora-user-images\image-20230217095158313.png)
+![image-20230217095158313](https://cdn.jsdelivr.net/gh/HeiDaotu/img-bucket/img/202302170953921.png)
 
 
 
@@ -22,7 +22,7 @@
 
 其他字段随意填写
 
-![image-20230217094726090](C:\Users\wuban\AppData\Roaming\Typora\typora-user-images\image-20230217094726090.png)
+![image-20230217094726090](https://cdn.jsdelivr.net/gh/HeiDaotu/img-bucket/img/202302170953031.png)
 
 #### 定时任务：
 
@@ -32,5 +32,4 @@
 
 **定时规则：**推荐一周运行2次即可，可参照我的`34 30 7 * * 1,5 `
 
-![image-20230217095019008](C:\Users\wuban\AppData\Roaming\Typora\typora-user-images\image-20230217095019008.png)
-
+![image-20230217095019008](https://cdn.jsdelivr.net/gh/HeiDaotu/img-bucket/img/202302170953427.png)
