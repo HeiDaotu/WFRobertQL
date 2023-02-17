@@ -16,7 +16,7 @@ from fake_useragent import UserAgent
 def get_cookies():
     Cookies = []
     if os.environ.get("DDNSTO_COOKIE"):
-        print("已获取并使用Env环境 Cookie")
+        print("🍪已获取并使用Env环境 Cookie")
         Cookies = os.environ.get("DDNSTO_COOKIE")
     return Cookies
 
@@ -68,7 +68,7 @@ def select_list(cookies):
     try:
         # 关闭SSL验证
         print('🍿开始调用接口地址')
-        repose = requests.post(url, body, headers=headers, verify=False, timeout=40)
+        repose = requests.post(url, body, headers=headers, timeout=40)
         status_code = repose.status_code
         if 200 in status_code:
             print("您已成功续期")
