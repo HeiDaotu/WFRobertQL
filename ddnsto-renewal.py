@@ -23,15 +23,23 @@ def get_cookies():
 
 def select_list(cookies):
     # 获取令牌
+    print('🍕开始获取csrftoken')
     csrftoken = {}
     for line in cookies.split(';'):
         key, value = line.split('=', 1)
         csrftoken[key] = value
     csrftoken = csrftoken.get(' csrftoken')
+    if csrftoken is not None:
+        print("🍕csrftoken获取成功")
 
     # 获取user_agent
-    fake_ua = UserAgent()
-    user_agent = fake_ua.random
+    print('🍟开始获取获取user_agent')
+    try:
+        fake_ua = UserAgent()
+        user_agent = fake_ua.random
+        print('🍟获取user_agent成功')
+    except Exception as e:
+        print('🍟获取user_agent失败了，失败原因是：', e.__str__())
 
     # url地址
     url = 'https://www.ddnsto.com/api/user/product/orders/'
@@ -57,6 +65,7 @@ def select_list(cookies):
 
     try:
         # 关闭SSL验证
+        print('🍿开始调用接口地址')
         repose = requests.post(url, body, headers=headers, verify=False, timeout=40)
         status_code = repose.status_code
         if 200 in status_code:
@@ -69,8 +78,11 @@ def select_list(cookies):
 
 
 if __name__ == "__main__":
+    print('🍪开始获取Cookies')
     cookies = get_cookies()
+    print('🍪获取Cookies成功')
     if cookies is not None:
+        print('🍕开始调用脚本')
         select_list(cookies)
     else:
         print("cookie为空，请查看您的配置文件。")
