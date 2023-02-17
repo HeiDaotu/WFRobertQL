@@ -14,7 +14,11 @@
 
 ![image-20230217095158313](https://cdn.jsdelivr.net/gh/HeiDaotu/img-bucket/img/202302170953921.png)
 
+#### 依赖管理：
 
+**名称：**`pip install fake_useragent`
+
+![image-20230217100516407](https://cdn.jsdelivr.net/gh/HeiDaotu/img-bucket/img/202302171005288.png)
 
 #### 订阅管理：
 
