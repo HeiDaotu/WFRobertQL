@@ -68,9 +68,9 @@ def select_list(cookies):
     try:
         # 关闭SSL验证
         print('🍿开始调用接口地址')
-        repose = requests.post(url, body, headers=headers, timeout=40)
+        repose = requests.post(url, body, headers=headers, verify=False, timeout=40)
         status_code = repose.status_code
-        if 200 in status_code:
+        if 200 is status_code:
             print("您已成功续期")
         else:
             print("您续期失败,失败原因为")
