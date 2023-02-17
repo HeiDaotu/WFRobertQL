@@ -70,7 +70,7 @@ def select_list(cookies):
         print('🍿开始调用接口地址')
         repose = requests.post(url, body, headers=headers, verify=False, timeout=40)
         status_code = repose.status_code
-        if 200 is status_code:
+        if 200 == status_code:
             print("您已成功续期")
         else:
             print("您续期失败,失败原因为")
