@@ -40,6 +40,8 @@ def select_list(cookies):
         print('🍟获取user_agent成功')
     except Exception as e:
         print('🍟获取user_agent失败了，失败原因是：', e.__str__())
+        print('🍟由于user_agent获取失败，因此自定义一个user_agent')
+        user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.46'
 
     # url地址
     url = 'https://www.ddnsto.com/api/user/product/orders/'
