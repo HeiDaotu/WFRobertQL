@@ -7,6 +7,7 @@
 
 import json
 import os
+import time
 import uuid
 
 import requests
@@ -39,8 +40,8 @@ def select_list(cookies):
         user_agent = fake_ua.random
         print('🍟获取user_agent成功')
     except Exception as e:
-        print('🍟获取user_agent失败了，失败原因是：', e.__str__())
-        print('🍟由于user_agent获取失败，因此自定义一个user_agent')
+        print('🍟获取user_agent失败了,失败原因是: ', e.__str__())
+        print('🍟由于user_agent获取失败，因此自定义一个user_agent给他用')
         user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.46'
 
     # url地址
@@ -65,18 +66,24 @@ def select_list(cookies):
         'Host': 'www.ddnsto.com'
     }
 
-    try:
-        # 关闭SSL验证
-        print('🍿开始调用接口地址')
-        repose = requests.post(url, body, headers=headers, verify=False, timeout=40)
-        status_code = repose.status_code
-        if 200 == status_code:
-            print("您已成功续期")
-        else:
-            print("您续期失败,失败原因为")
-            print(repose.text)
-    except Exception as e:
-        print("续期未知错误,错误原因：", e)
+    print('🍿开始调用接口地址')
+    for i in range(5):
+        print(f'😎开始第{i + 1}次调用接口，最多调用5次')
+        try:
+            # 关闭SSL验证
+            repose = requests.post(url, body, headers=headers, verify=False, timeout=5)
+            status_code = repose.status_code
+            # 判断
+            if 200 == status_code:
+                print("😊您已成功续期")
+                break
+            else:
+                print("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: ", repose.text)
+                break
+        except Exception as e:
+            print("👌续期未知错误,错误原因：", e)
+            print('👌60S后开始重复调用该接口')
+            time.sleep(60)
 
 
 if __name__ == "__main__":
