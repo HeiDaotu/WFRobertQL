@@ -22,11 +22,11 @@ def get_cookies():
     return Cookies
 
 
-def select_list(cookies):
+def select_list(cookie):
     # 获取令牌
     print('🍕开始获取csrftoken')
     csrftoken = {}
-    for line in cookies.split(';'):
+    for line in cookie.split(';'):
         key, value = line.split('=', 1)
         csrftoken[key] = value
     csrftoken = csrftoken.get(' csrftoken')
@@ -57,7 +57,7 @@ def select_list(cookies):
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
         'User-Agent': user_agent,
-        'Cookie': cookies,
+        'Cookie': cookie,
         'Content-Length': '70',
         'Content-Type': 'application/json',
         'Referer': 'https://www.ddnsto.com/app/',
@@ -87,11 +87,11 @@ def select_list(cookies):
 
 
 if __name__ == "__main__":
-    print('🍪开始获取Cookies')
-    cookies = get_cookies()
-    print('🍪获取Cookies成功')
-    if cookies is not None:
+    print('🍪开始获取Cookie')
+    cookie = get_cookies()
+    print('🍪获取Cookie成功')
+    if cookie is not None:
         print('🍕开始调用脚本')
-        select_list(cookies)
+        select_list(cookie)
     else:
         print("cookie为空，请查看您的配置文件。")
