@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 # 所有测试不上传  后缀为demo
+52pojie/get_cookies.py
 *demo.py
 # 去除json文件
 user_data.json
