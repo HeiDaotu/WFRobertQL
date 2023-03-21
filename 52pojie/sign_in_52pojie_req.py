@@ -4,10 +4,7 @@
 # @Author  : WFRobert
 # @File    : sign_in_52pojie_req.py
 # 这是52pojie自动签到脚本
-import os
-import requests
-from bs4 import BeautifulSoup
-
+import logging
 import os
 import sys
 # import notify
@@ -21,7 +18,7 @@ if cookies == "":
     if os.environ.get("PJ52_COOKIE"):
         cookies = os.environ.get("PJ52_COOKIE")
     else:
-        print("😢请在环境变量填写PJ52_COOKIE的值")
+        logging.info("😢请在环境变量填写PJ52_COOKIE的值")
         sys.exit()
 n = 1
 for cookie in cookies.split("&"):
@@ -38,7 +35,7 @@ for cookie in cookies.split("&"):
         if "htVC_2132_auth" in key:
             cookie += "htVC_2132_auth=" + urllib.parse.quote(i.split("=")[1]) + ";"
     if not ('htVC_2132_saltkey' in cookie or 'htVC_2132_auth' in cookie):
-        print("😢第{n}cookie中未包含htVC_2132_saltkey或htVC_2132_auth字段，请检查cookie")
+        logging.error("😢第{n}cookie中未包含htVC_2132_saltkey或htVC_2132_auth字段，请检查cookie")
         sys.exit()
     headers = {
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,"
@@ -63,16 +60,16 @@ for cookie in cookies.split("&"):
     r_data = BeautifulSoup(r.text, "html.parser")
     jx_data = r_data.find("div", id="messagetext").find("p").text
     if "您需要先登录才能继续本操作" in jx_data:
-        print(f"第😢{n}个账号Cookie 失效")
-        message = f"😢第{n}个账号Cookie 失效"
+        logging.error(f"第😢{n}个账号Cookie 失效")
+        # message = f"😢第{n}个账号Cookie 失效"
     elif "恭喜" in jx_data:
-        print(f"😊第{n}个账号签到成功")
-        message = f"😊第{n}个账号签到成功"
+        logging.info(f"😊第{n}个账号签到成功")
+        # message = f"😊第{n}个账号签到成功"
     elif "不是进行中的任务" in jx_data:
-        print(f"😊第{n}个账号今日已签到")
-        message = f"😊第{n}个账号今日已签到"
+        logging.info(f"😊第{n}个账号今日已签到")
+        # message = f"😊第{n}个账号今日已签到"
     else:
-        print(f"😢第{n}个账号签到失败")
-        message = f"😢第{n}个账号签到失败"
+        logging.info(f"😢第{n}个账号签到失败")
+        # message = f"😢第{n}个账号签到失败"
     n += 1
     # notify.send("吾爱签到", message)
