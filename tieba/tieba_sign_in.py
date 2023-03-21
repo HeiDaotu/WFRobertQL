@@ -53,7 +53,7 @@ UTF8 = "utf-8"
 SIGN = "sign"
 KW = "kw"
 
-s = requests.Session()
+session = requests.Session()
 
 
 def get_tbs(bduss):
@@ -61,11 +61,11 @@ def get_tbs(bduss):
     headers = copy.copy(HEADERS)
     headers.update({COOKIE: EMPTY_STR.join([BDUSS, EQUAL, bduss])})
     try:
-        tbs = s.get(url=TBS_URL, headers=headers, timeout=5).json()[TBS]
+        tbs = session.get(url=TBS_URL, headers=headers, timeout=5).json()[TBS]
     except Exception as e:
         logger.error("😢获取tbs出错" + e)
         logger.info("🎈重新获取tbs开始")
-        tbs = s.get(url=TBS_URL, headers=headers, timeout=5).json()[TBS]
+        tbs = session.get(url=TBS_URL, headers=headers, timeout=5).json()[TBS]
     logger.info("🎈获取tbs结束")
     return tbs
 
@@ -91,7 +91,7 @@ def get_favorite(bduss):
     }
     data = encodeData(data)
     try:
-        res = s.post(url=LIKIE_URL, data=data, timeout=5).json()
+        res = session.post(url=LIKIE_URL, data=data, timeout=5).json()
     except Exception as e:
         logger.error("😢获取关注的贴吧出错" + e)
         return []
@@ -123,7 +123,7 @@ def get_favorite(bduss):
         }
         data = encodeData(data)
         try:
-            res = s.post(url=LIKIE_URL, data=data, timeout=5).json()
+            res = session.post(url=LIKIE_URL, data=data, timeout=5).json()
         except Exception as e:
             logger.error("😢获取关注的贴吧出错" + e)
             continue
@@ -175,7 +175,7 @@ def client_sign(bduss, tbs, fid, kw):
     data = copy.copy(SIGN_DATA)
     data.update({BDUSS: bduss, FID: fid, KW: kw, TBS: tbs, TIMESTAMP: str(int(time.time()))})
     data = encodeData(data)
-    res = s.post(url=SIGN_URL, data=data, timeout=5).json()
+    res = session.post(url=SIGN_URL, data=data, timeout=5).json()
     return res
 
 
