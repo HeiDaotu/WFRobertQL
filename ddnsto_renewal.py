@@ -88,9 +88,7 @@ def select_list(cookie):
 
 if __name__ == "__main__":
     print('🍪开始获取Cookie')
-    # cookie = 'ksuser=e7b78477-c932-474a-b602-1a2f0366b151; csrftoken=RxPIcR11YKf3EKc50vtPZIlnDRnnrHrVyt9skqFc5n1LQe3prltvUglcZgUDOqqx; sessionid=buuw9i5h39f0zyo8fe3y34iqd2b1swcf'
-    cookie = 'ksuser=e7b78477-c932-474a-b602-1a2f0366b151; csrftoken=rzcYi23wJOPrPSzX8U297pXiq8F4v0bDMplYxQNTKpLyaYzgXSa286rEgDd2jNhp; sessionid=r245wgg8sai5uyt0rihtoi3yohmadebs; Hm_lvt_5f1bc900ab954d0d1e03eb7f29aba601=1678066111,1678149726,1678196155,1678242792; Hm_lpvt_5f1bc900ab954d0d1e03eb7f29aba601=1678242830'
-    # cookie = get_cookies()
+    cookie = get_cookies()
     print('🍪获取Cookie成功')
     if cookie is not None:
         print('🍕开始调用脚本')
