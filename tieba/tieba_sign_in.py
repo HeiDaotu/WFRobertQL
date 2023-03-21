@@ -99,7 +99,8 @@ def get_favorite(bduss):
     if 'forum_list' not in returnData:
         returnData['forum_list'] = []
     if res['forum_list'] == []:
-        return {'gconforum': [], 'non-gconforum': []}
+        # return {'gconforum': [], 'non-gconforum': []}
+        return []
     if 'non-gconforum' not in returnData['forum_list']:
         returnData['forum_list']['non-gconforum'] = []
     if 'gconforum' not in returnData['forum_list']:
@@ -222,15 +223,20 @@ def main():
     if ('BDUSS' not in ENV):
         logger.error("😢未配置BDUSS")
         return
-    b = ENV['BDUSS'].split('&')
+    b = ENV['BDUSS'].split(
+        '&')
+
     for n, i in enumerate(b):
         logger.info("😊开始签到第" + str(n + 1) + "个用户" + i)
         tbs = get_tbs(i)
         favorites = get_favorite(i)
-        for j in favorites:
-            time.sleep(random.randint(1, 5))
-            client_sign(i, tbs, j["id"], j["name"])
-        logger.info("👍完成第" + str(n + 1) + "个用户签到")
+        if favorites.__len__() > 0:
+            for j in favorites:
+                time.sleep(random.randint(1, 5))
+                client_sign(i, tbs, j["id"], j["name"])
+            logger.info("👍完成第" + str(n + 1) + "个用户签到")
+        else:
+            logger.info("😎没有待签到的贴吧，请明天再来签到。")
     send_email(favorites)
     logger.info("👍所有用户签到结束")
 
