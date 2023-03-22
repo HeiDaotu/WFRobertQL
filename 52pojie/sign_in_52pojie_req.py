@@ -11,6 +11,7 @@ import urllib.parse
 import requests
 from bs4 import BeautifulSoup
 
+# 日志格式化输出，不加  ql无法打出日志
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 

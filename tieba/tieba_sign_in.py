@@ -15,6 +15,7 @@ import random
 import smtplib
 from email.mime.text import MIMEText
 
+# 日志格式化输出，不加  ql无法打出日志
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
@@ -225,6 +226,7 @@ def main():
         return
     b = ENV['BDUSS'].split(
         '&')
+    logger.info("BDUSS---：", b)
 
     for n, i in enumerate(b):
         logger.info("BDUSS：", b)
