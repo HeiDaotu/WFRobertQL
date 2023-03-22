@@ -13,6 +13,7 @@ import requests
 from bs4 import BeautifulSoup
 
 # 多cookie使用&分割
+logging.info("开始签到")
 cookies = ""
 if cookies == "":
     if os.environ.get("PJ52_COOKIE"):
