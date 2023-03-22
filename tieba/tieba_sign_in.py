@@ -226,10 +226,7 @@ def main():
         return
     b = ENV['BDUSS'].split(
         '&')
-    logger.info("BDUSS---：", b)
-
     for n, i in enumerate(b):
-        logger.info("BDUSS：", b)
         logger.info("😊开始签到第" + str(n + 1) + "个用户" + i)
         tbs = get_tbs(i)
         favorites = get_favorite(i)
