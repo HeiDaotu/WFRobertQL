@@ -2,14 +2,13 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2023/2/16 10:01
 # @Author  : WFRobert
-# @File    : ddnsto_renewal.py
+# @File    : ddnsto_sign_in.py
 # 这是ddnsto自动续费免费7天的脚本
 
 import json
 import os
 import time
 import uuid
-
 import requests
 from fake_useragent import UserAgent
 
@@ -34,15 +33,17 @@ def select_list(cookie):
         print("🍕csrftoken获取成功")
 
     # 获取user_agent
-    print('🍟开始获取获取user_agent')
-    try:
-        fake_ua = UserAgent()
-        user_agent = fake_ua.random
-        print('🍟获取user_agent成功')
-    except Exception as e:
-        print('🍟获取user_agent失败了,失败原因是: ', e.__str__())
-        print('🍟由于user_agent获取失败，因此自定义一个user_agent给他用')
-        user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.46'
+    user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36 Edg/111.0.1661.62'
+
+    # print('🍟开始获取获取user_agent')
+    # try:
+    #     fake_ua = UserAgent()
+    #     user_agent = fake_ua.random
+    #     print('🍟获取user_agent成功')
+    # except Exception as e:
+    #     print('🍟获取user_agent失败了,失败原因是: ', e.__str__())
+    #     print('🍟由于user_agent获取失败，因此自定义一个user_agent给他用')
+    #     user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36 Edg/110.0.1587.46'
 
     # url地址
     url = 'https://www.ddnsto.com/api/user/product/orders/'

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2023/3/9 15:01
 # @Author  : WFRobert
-# @File    : sign_in_52pojie_req.py
+# @File    : 52pojie_sign_in.py
 # 这是52pojie自动签到脚本
 import logging
 import os
@@ -71,7 +71,6 @@ for cookie in cookies.split("&"):
         # message = f"😊第{n}个账号签到成功"
     elif "不是进行中的任务" in jx_data:
         logger.info(f"😊第{n}个账号今日已签到")
-        # message = f"😊第{n}个账号今日已签到"
     else:
         logger.info(f"😢第{n}个账号签到失败")
         # message = f"😢第{n}个账号签到失败"

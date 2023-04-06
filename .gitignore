@@ -4,7 +4,6 @@ __pycache__/
 *$py.class
 
 # 所有测试不上传  后缀为demo
-52pojie/get_cookies.py
 *demo.py
 # 去除json文件
 user_data.json
@@ -13,6 +12,7 @@ user_data.json
 # 去除所有的iml
 *.iml
 
+/52pojie/cookies.txt
 
 # C extensions
 *.so
