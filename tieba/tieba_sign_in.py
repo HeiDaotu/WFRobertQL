@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# @Time    : 2023/3/21 10:01
-# @Author  : WFRobert
-# @File    : tieba_sign_in.py
-# 这是贴吧签到脚本
+"""
+File: tieba_sign_in.py
+Author: WFRobert
+Date: 2023/3/9 15:01
+cron: 5 6 6 * * ?
+new Env('贴吧签到脚本');
+Description: 贴吧签到脚本,实现每日自动签到所有贴吧
+Update: 2023/3/9 更新cron
+"""
 import os
 import requests
 import hashlib
