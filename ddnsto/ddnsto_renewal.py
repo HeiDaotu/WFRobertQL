@@ -67,7 +67,7 @@ def select_list(cookie):
             repose = session.post(url, json=body, verify=False, timeout=5)
             text_id = repose.json()["id"]
             session.get(f"{url}/{text_id}", json=body, verify=False, timeout=5)
-            session.patch("/api/user/routers/346477", json=body, verify=False, timeout=5)
+            session.patch("https://www.ddnsto.com/api/user/routers/346477", json=body, verify=False, timeout=5)
 
             status_code = repose.status_code
 
@@ -79,7 +79,11 @@ def select_list(cookie):
                 print("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: ", repose.text)
                 break
         except Exception as e:
-            print("😒您续期失败,正在尝试重新续期", e)
+            if e == 'id':
+                print("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
+                break
+            else:
+                print("😒您续期失败,正在尝试重新续期", e)
             time.sleep(60)
         finally:
             session.close()
