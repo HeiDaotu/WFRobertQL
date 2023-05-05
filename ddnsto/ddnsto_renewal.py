@@ -38,6 +38,7 @@ def select_list(cookie):
 
     # url地址
     url = 'https://www.ddnsto.com/api/user/product/orders/'
+    routers_url = 'https://www.ddnsto.com/api/user/routers/'
     body = {
         "product_id": 2,
         "uuid_from_client": ''.join(uuid.uuid1().__str__().split('-'))
@@ -66,9 +67,15 @@ def select_list(cookie):
             # 关闭SSL验证
             repose = session.post(url, json=body, verify=False, timeout=5)
             text_id = repose.json()["id"]
-            session.get(f"{url}/{text_id}", json=body, verify=False, timeout=5)
-            session.patch("https://www.ddnsto.com/api/user/routers/346477", json=body, verify=False, timeout=5)
+            session.get(f"{url}{text_id}/", verify=False, timeout=5)
+            routers_repose = session.get(f"{routers_url}?limit=5&offset=0", verify=False, timeout=5)
+            routers_id = routers_repose.json()["results"][0]['id']
 
+            body_routers = {
+                "plan_ids_to_add": [text_id],
+                "server": 1
+            }
+            session.patch(f"{routers_url}{routers_id}/", json=body_routers, verify=False, timeout=5)
             status_code = repose.status_code
 
             # 判断
