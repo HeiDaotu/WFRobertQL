@@ -23,6 +23,7 @@ def get_cookies():
 
 
 def select_list(cookie):
+    global repose
     print('🍕开始获取csrftoken')
     # 获取令牌
     csrftoken = {}
@@ -64,8 +65,11 @@ def select_list(cookie):
     for i in range(3):
         print(f'😎开始第{i + 1}次调用接口，最多调用3次')
         try:
-            # 关闭SSL验证
-            repose = session.post(url, json=body, verify=False, timeout=5)
+            try:
+                # 关闭SSL验证
+                repose = session.post(url, json=body, verify=False, timeout=5)
+            except Exception as exc:
+                print(f"😒cookie有问题，请使用新的cookie：{exc}")
             text_id = repose.json()["id"]
             session.get(f"{url}{text_id}/", verify=False, timeout=5)
             routers_repose = session.get(f"{routers_url}?limit=5&offset=0", verify=False, timeout=5)
@@ -86,12 +90,12 @@ def select_list(cookie):
                 print("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: ", repose.text)
                 break
         except Exception as e:
-            if e == 'id':
+            if e.args[0] == 'id':
                 print("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
                 break
             else:
                 print("😒您续期失败,正在尝试重新续期", e)
-            time.sleep(60)
+                time.sleep(60)
         finally:
             session.close()
 
