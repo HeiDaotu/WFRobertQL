@@ -5,6 +5,8 @@ __pycache__/
 
 # 所有测试不上传  后缀为demo
 *demo.py
+# alijson
+aliyunpan.aliconfig.json
 # 去除json文件
 user_data.json
 # 去除所有xml

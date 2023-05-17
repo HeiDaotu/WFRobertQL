@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-File: tieba_sign_in.py
+File: tieba.py
 Author: WFRobert
 Date: 2023/3/9 15:01
 cron: 5 6 6 * * ?

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-File: ddnsto_renewal.py
+File: ddnsto.py
 Author: WFRobert
 Date: 2023/2/16 10:01
 cron: 19 47 7 1/6 * ?

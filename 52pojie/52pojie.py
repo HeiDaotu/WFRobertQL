@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-File: 52pojie_sign_in.py
+File: 52pojie.py
 Author: WFRobert
 Date: 2023/3/9 15:01
 cron: 6 14 9 * * ?
@@ -70,14 +70,10 @@ for cookie in cookies.split("&"):
     jx_data = r_data.find("div", id="messagetext").find("p").text
     if "您需要先登录才能继续本操作" in jx_data:
         logger.error(f"第😢{n}个账号Cookie 失效")
-        # message = f"😢第{n}个账号Cookie 失效"
     elif "恭喜" in jx_data:
         logger.info(f"😊第{n}个账号签到成功")
-        # message = f"😊第{n}个账号签到成功"
     elif "不是进行中的任务" in jx_data:
         logger.info(f"😊第{n}个账号今日已签到")
     else:
         logger.info(f"😢第{n}个账号签到失败")
-        # message = f"😢第{n}个账号签到失败"
     n += 1
-    # notify.send("吾爱签到", message)
