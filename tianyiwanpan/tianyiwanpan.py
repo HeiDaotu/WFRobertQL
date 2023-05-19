@@ -19,7 +19,7 @@ import rsa
 
 import requests
 
-from logger import init_logger
+import init_logger
 
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 

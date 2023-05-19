@@ -18,7 +18,7 @@ import time
 
 import requests
 
-from logger import init_logger
+import init_logger
 
 
 # 小黑盒签到

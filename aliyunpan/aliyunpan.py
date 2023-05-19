@@ -15,7 +15,7 @@ import os
 from datetime import datetime
 from time import mktime, time
 
-from logger import init_logger
+import init_logger
 
 import requests
 
