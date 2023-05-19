@@ -16,7 +16,7 @@ import logging
 import re
 import time
 import rsa
-
+import notify
 import requests
 
 import init_logger
@@ -145,8 +145,10 @@ class TianYiYunPan:
                 netdiskBonus = response.json()['netdiskBonus']
                 if (response.json()['isSign'] == "false"):
                     logging.info(f"未签到，签到获得{netdiskBonus}M空间")
+                    notify.send("天翼云", f"未签到，签到获得{netdiskBonus}M空间")
                 else:
                     logging.info(f"已经签到过了，签到获得{netdiskBonus}M空间")
+                    notify.send("天翼云", f"已经签到过了，签到获得{netdiskBonus}M空间")
 
                 headers = {
                     'User-Agent': 'Mozilla/5.0 (Linux; Android 5.1.1; SM-G930K Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Ecloud/8.6.3 Android/22 clientId/355325117317828 clientModel/SM-G930K imsi/460071114317824 clientChannelId/qq proVersion/1.0.6',
@@ -178,6 +180,7 @@ class TianYiYunPan:
                 return "账号或密码不能为空"
         except Exception as er:
             logging.info(f"天翼云盘:出现了错误:{er}")
+            notify.send("天翼云", f"天翼云盘:出现了错误:{er}")
             return f"出现了错误:{er}"
 
 
