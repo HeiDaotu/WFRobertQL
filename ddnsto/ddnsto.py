@@ -108,8 +108,7 @@ def print_message(pr_message):
 if __name__ == "__main__":
     # 使用format方法格式化字符串
     print_message('开始获取Cookie')
-    # cookie = get_cookies()
-    cookie = "ksuser=e7b78477-c932-474a-b602-1a2f0366b151; csrftoken=oscIeEzs3BhuFz1q7A4UGCcUhAbOAZLVfwh1ucVbaCq1AclZW4EmzdGQlJ5WjFoE; sessionid=4w6etq5btpjhnx9ncjb545w8yode7amf; Hm_lvt_5f1bc900ab954d0d1e03eb7f29aba601=1683679274; Hm_lpvt_5f1bc900ab954d0d1e03eb7f29aba601=1683679274"
+    cookie = get_cookies()
     print_message('获取Cookie成功')
     if cookie:
         # 使用三元表达式简化条件判断
