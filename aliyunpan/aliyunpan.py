@@ -14,7 +14,8 @@ import logging
 import os
 from datetime import datetime
 from time import mktime, time
-from typing import NoReturn
+
+from logger import init_logger
 
 import requests
 
@@ -87,25 +88,6 @@ def sign_in(access_token: str) -> bool:
     return True
 
 
-def init_logger() -> NoReturn:
-    """
-    初始化日志系统
-
-    :return:
-    """
-    log = logging.getLogger()
-    log.setLevel(logging.INFO)
-    log_format = logging.Formatter(
-        '%(asctime)s - %(filename)s:%(lineno)d - %(levelname)s: %(message)s'
-    )
-
-    # Console
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    ch.setFormatter(log_format)
-    log.addHandler(ch)
-
-
 def update_token_file(num: int, data: dict):
     """
     更新本地 access_token 文件
@@ -127,7 +109,7 @@ def main():
         base = [{"refresh_token": "用户1refresh_token", "is": 0}, {"refresh_token": "用户2refresh_token", "is": 0}]
         with open('aliconfig.json', 'w', encoding="utf-8") as f:
             f.write(json.dumps(base, indent=4, ensure_ascii=False))
-    init_logger()  # 初始化日志系统
+    init_logger.init_logger()  # 初始化日志系统
     with open('aliconfig.json', 'r', encoding="utf-8") as f:
         config = json.load(f)
     num = 0

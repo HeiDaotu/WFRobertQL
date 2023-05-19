@@ -18,6 +18,8 @@ import time
 
 import requests
 
+from logger import init_logger
+
 
 # 小黑盒签到
 class XiaoHeiHe:
@@ -142,6 +144,7 @@ class XiaoHeiHe:
 
 def main():
     logging.info("第一次会生成heiboxconfig.json文件，请在文件中填写对应的值，将switch改为true才会运行")
+    init_logger.init_logger()  # 初始化日志系统
     # 判断是否存在文件
     if not os.path.exists('heiboxconfig.json'):
         base = [{"switch": False, "cookie": "用户1cookie", "imei": "用户1imei", "heybox_id": "用户1heybox_id",
