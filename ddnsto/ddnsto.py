@@ -131,4 +131,4 @@ if __name__ == "__main__":
 
         # 发送通知
         msg = '\n'.join(message)
-        notify.send("天翼网盘", msg)
+        notify.send("ddnsto", msg)

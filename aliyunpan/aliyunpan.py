@@ -15,10 +15,8 @@ import os
 from datetime import datetime
 from time import mktime, time
 
-import init_logger
-
+from init_logger import init_logger
 import requests
-
 import notify
 
 # 通知内容
@@ -114,7 +112,7 @@ def main():
         base = [{"refresh_token": "用户1refresh_token", "is": 0}, {"refresh_token": "用户2refresh_token", "is": 0}]
         with open('aliconfig.json', 'w', encoding="utf-8") as f:
             f.write(json.dumps(base, indent=4, ensure_ascii=False))
-    init_logger.init_logger()  # 初始化日志系统
+    init_logger()  # 初始化日志系统
     with open('aliconfig.json', 'r', encoding="utf-8") as f:
         config = json.load(f)
     num = 0
@@ -167,4 +165,4 @@ if __name__ == '__main__':
     main()
     # 发送通知
     msg = '\n'.join(message)
-    notify.send("阿里网盘", msg)
+    notify.send("阿里云盘", msg)

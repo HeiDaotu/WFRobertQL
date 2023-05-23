@@ -19,7 +19,7 @@ import rsa
 import notify
 import requests
 
-import init_logger
+from init_logger import init_logger
 
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 
@@ -132,7 +132,6 @@ class TianYiYunPan:
     def yunpan_sign(self):
         global description
         try:
-            message.append(f'{self.username} -> 开始签到')
             if self.username != "" and self.password != "":
                 s = self.login()
                 rand = str(round(time.time() * 1000))
@@ -150,11 +149,10 @@ class TianYiYunPan:
                 netdiskBonus = response.json()['netdiskBonus']
                 if (response.json()['isSign'] == "false"):
                     logging.info(f"未签到，签到获得{netdiskBonus}M空间")
-                    message.append(f"未签到，签到获得{netdiskBonus}M空间")
+                    message.append(f'{self.username} 签到成功,签到获得{netdiskBonus}M空间')
                 else:
                     logging.info(f"已经签到过了，签到获得{netdiskBonus}M空间")
-                    message.append(f"已经签到过了，签到获得{netdiskBonus}M空间")
-
+                    message.append(f"{self.username} 已经签到过了，签到获得{netdiskBonus}M空间")
                 headers = {
                     'User-Agent': 'Mozilla/5.0 (Linux; Android 5.1.1; SM-G930K Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Ecloud/8.6.3 Android/22 clientId/355325117317828 clientModel/SM-G930K imsi/460071114317824 clientChannelId/qq proVersion/1.0.6',
                     "Referer": "https://m.cloud.189.cn/zhuanti/2016/sign/index.jsp?albumBackupOpened=1",
@@ -216,7 +214,7 @@ def process_user(user, num):
 
 def main():
     logging.info("第一次会生成tianyiwanpanconfig.json文件，请在文件中填写对应的值，将switch改为true才会运行")
-    init_logger.init_logger()  # 初始化日志系统
+    init_logger()  # 初始化日志系统
     # 判断是否存在文件
     if not os.path.exists('tianyiwanpanconfig.json'):
         create_config_file()

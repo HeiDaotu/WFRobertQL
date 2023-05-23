@@ -15,19 +15,23 @@ import sys
 import urllib.parse
 import requests
 from bs4 import BeautifulSoup
+from init_logger import init_logger
+import notify
 
-# 日志格式化输出，不加  ql无法打出日志
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# 通知内容
+message = []
+
+# 初始化日志系统
+init_logger()
 
 # 多cookie使用&分割
-logger.info("开始签到")
+logging.info("开始签到")
 cookies = ""
 if cookies == "":
     if os.environ.get("PJ52_COOKIE"):
         cookies = os.environ.get("PJ52_COOKIE")
     else:
-        logger.info("😢请在环境变量填写PJ52_COOKIE的值")
+        logging.info("😢请在环境变量填写PJ52_COOKIE的值")
         sys.exit()
 n = 1
 for cookie in cookies.split("&"):
@@ -44,7 +48,8 @@ for cookie in cookies.split("&"):
         if "htVC_2132_auth" in key:
             cookie += "htVC_2132_auth=" + urllib.parse.quote(i.split("=")[1]) + ";"
     if not ('htVC_2132_saltkey' in cookie or 'htVC_2132_auth' in cookie):
-        logger.error("😢第{n}cookie中未包含htVC_2132_saltkey或htVC_2132_auth字段，请检查cookie")
+        logging.error(f"😢第{n}cookie中未包含htVC_2132_saltkey或htVC_2132_auth字段，请检查cookie")
+        message.append(f"😢第{n}cookie中未包含htVC_2132_saltkey或htVC_2132_auth字段，请检查cookie")
         sys.exit()
     headers = {
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,"
@@ -69,11 +74,19 @@ for cookie in cookies.split("&"):
     r_data = BeautifulSoup(r.text, "html.parser")
     jx_data = r_data.find("div", id="messagetext").find("p").text
     if "您需要先登录才能继续本操作" in jx_data:
-        logger.error(f"第😢{n}个账号Cookie 失效")
+        logging.error(f"第😢{n}个账号Cookie 失效")
+        message.append(f"第😢{n}个账号Cookie 失效")
     elif "恭喜" in jx_data:
-        logger.info(f"😊第{n}个账号签到成功")
+        logging.info(f"😊第{n}个账号签到成功")
+        message.append(f"😊第{n}个账号签到成功")
     elif "不是进行中的任务" in jx_data:
-        logger.info(f"😊第{n}个账号今日已签到")
+        logging.info(f"😊第{n}个账号今日已签到")
+        message.append(f"😊第{n}个账号今日已签到")
     else:
-        logger.info(f"😢第{n}个账号签到失败")
+        logging.info(f"😢第{n}个账号签到失败")
+        message.append(f"😢第{n}个账号签到失败")
     n += 1
+
+# 发送通知
+msg = '\n'.join(message)
+notify.send("吾爱破解签到", msg)
