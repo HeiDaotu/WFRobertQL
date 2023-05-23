@@ -18,7 +18,11 @@ import time
 
 import requests
 
-import init_logger
+import notify
+from init_logger import init_logger
+
+# 通知内容
+message = []
 
 
 # 小黑盒签到
@@ -94,9 +98,11 @@ class XiaoHeiHe:
             if req == "ok":
                 logging.info("分享成功")
                 msg_req = "分享成功"
+                message.append(f"😊分享成功")
             else:
                 logging.info("分享失败")
                 msg_req = "分享失败"
+                message.append(f"😢分享失败")
             return msg_req
 
         def check():
@@ -127,24 +133,29 @@ class XiaoHeiHe:
                 if req['status'] == "ok":
                     if req['msg'] == "":
                         logging.info("小黑盒:已经签到过了")
+                        message.append(f"😢{self.heybox_id},小黑盒:已经签到过了")
                         return fx + "\n已经签到过了"
                     else:
                         logging.info(f"小黑盒:{req['msg']}")
+                        message.append(f"😊{self.heybox_id},小黑盒:{req['msg']}")
                         return {fx} + "\n" + req['msg']
                 else:
                     logging.info(f"小黑盒:签到失败 - {req['msg']}")
+                    message.append(f"😢小黑盒:签到失败 - {req['msg']}")
                     return f"{fx}\n签到失败 - {req['msg']}"
             except Exception as e:
                 logging.info(f"小黑盒:出现了错误,错误信息{e}")
+                message.append(f"😢小黑盒:出现了错误,错误信息{e}")
                 return f"出现了错误,错误信息{e}"
         else:
             logging.info("小黑盒:没有配置cookie")
+            message.append(f"😢小黑盒:没有配置cookie")
             return "没有配置cookie"
 
 
 def main():
     logging.info("第一次会生成heiboxconfig.json文件，请在文件中填写对应的值，将switch改为true才会运行")
-    init_logger.init_logger()  # 初始化日志系统
+    init_logger()  # 初始化日志系统
     # 判断是否存在文件
     if not os.path.exists('heiboxconfig.json'):
         base = [{"switch": False, "cookie": "用户1cookie", "imei": "用户1imei", "heybox_id": "用户1heybox_id",
@@ -160,6 +171,7 @@ def main():
         num += 1
         if not user['switch']:
             logging.info(f'😢第{num}个 switch值为False, 不进行任务')
+            message.append(f'😢第{num}个 switch值为False, 不进行任务')
             continue
         else:
             body = XiaoHeiHe(user)
@@ -168,3 +180,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+    # 发送通知
+    msg = '\n'.join(message)
+    notify.send("小黑盒", msg)
