@@ -19,6 +19,11 @@ import init_logger
 
 import requests
 
+import notify
+
+# 通知内容
+message = []
+
 
 def update_access_token(refresh_token: str) -> bool | dict:
     """
@@ -117,6 +122,7 @@ def main():
         num += 1
         if user['is'] == 0:
             logging.info(f'😢第{num}个 is值为0, 不进行任务')
+            message.append(f'😢第{num}个 is值为0, 不进行任务')
             continue
         try:
             t = user['expired_at']
@@ -126,6 +132,7 @@ def main():
             t = 0
             access_token = None
             sign_time = None
+        message.append(f'😊第{num}个账户开始执行任务')
         # 检查 access token 有效性
         if (
                 int(t) < int(time() * 1000)
@@ -145,9 +152,11 @@ def main():
         # 签到
         if sign_time == datetime.now().strftime('%Y-%m-%d'):
             logging.info('😊今日已签到, 跳过.')
+            message.append('😊今日已签到, 跳过.')
             continue
         if not sign_in(user['access_token']):
             logging.error('😢签到失败.')
+            message.append('😢签到失败.')
             continue
         else:
             user["sign_time"] = datetime.now().strftime('%Y-%m-%d')
@@ -156,3 +165,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+    # 发送通知
+    msg = '\n'.join(message)
+    notify.send("阿里网盘", msg)

@@ -25,6 +25,9 @@ BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 
 B64MAP = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 
+# 通知内容
+message = []
+
 
 # 天翼云盘
 # 使用了开源项目https://www.52pojie.cn/forum.php?mod=viewthread&tid=1784111&highlight=%CC%EC%D2%ED%D4%C6%C5%CC
@@ -127,7 +130,9 @@ class TianYiYunPan:
         return s
 
     def yunpan_sign(self):
+        global description
         try:
+            message.append(f'{self.username} -> 开始签到')
             if self.username != "" and self.password != "":
                 s = self.login()
                 rand = str(round(time.time() * 1000))
@@ -145,10 +150,10 @@ class TianYiYunPan:
                 netdiskBonus = response.json()['netdiskBonus']
                 if (response.json()['isSign'] == "false"):
                     logging.info(f"未签到，签到获得{netdiskBonus}M空间")
-                    notify.send("天翼云", f"未签到，签到获得{netdiskBonus}M空间")
+                    message.append(f"未签到，签到获得{netdiskBonus}M空间")
                 else:
                     logging.info(f"已经签到过了，签到获得{netdiskBonus}M空间")
-                    notify.send("天翼云", f"已经签到过了，签到获得{netdiskBonus}M空间")
+                    message.append(f"已经签到过了，签到获得{netdiskBonus}M空间")
 
                 headers = {
                     'User-Agent': 'Mozilla/5.0 (Linux; Android 5.1.1; SM-G930K Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Ecloud/8.6.3 Android/22 clientId/355325117317828 clientModel/SM-G930K imsi/460071114317824 clientChannelId/qq proVersion/1.0.6',
@@ -161,26 +166,29 @@ class TianYiYunPan:
                     logging.info(response.text)
                 else:
                     description = response.json()['description']
-                    logging.info(f"抽奖获得{description}")
+                logging.info(f"抽奖获得{description}")
+                message.append(f"抽奖获得{description}")
                 response = s.get(url2, headers=headers)
                 if ("errorCode" in response.text):
                     logging.info(response.text)
                 else:
                     description = response.json()['description']
-                    logging.info(f"抽奖获得{description}")
-
+                logging.info(f"抽奖获得{description}")
+                message.append(f"抽奖获得{description}")
                 response = s.get(url3, headers=headers)
                 if ("errorCode" in response.text):
                     logging.info(response.text)
                 else:
                     description = response.json()['description']
                     logging.info(f"链接3抽奖获得{description}")
+                    message.append(f"链接3抽奖获得{description}")
             else:
                 logging.info("天翼云盘:账号或密码不能为空")
+                message.append("天翼云盘:账号或密码不能为空")
                 return "账号或密码不能为空"
         except Exception as er:
             logging.info(f"天翼云盘:出现了错误:{er}")
-            notify.send("天翼云", f"天翼云盘:出现了错误:{er}")
+            message.append(f"天翼云盘:出现了错误:{er}")
             return f"出现了错误:{er}"
 
 
@@ -199,6 +207,7 @@ def read_config_file():
 def process_user(user, num):
     if not user['switch']:
         logging.info(f'😢第{num}个 switch值为False, 不进行任务')
+        message.append(f'😢第{num}个 switch值为False, 不进行任务')
         return
     else:
         body = TianYiYunPan(user)
@@ -220,3 +229,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+    # 发送通知
+    msg = '\n'.join(message)
+    notify.send("天翼网盘", msg)

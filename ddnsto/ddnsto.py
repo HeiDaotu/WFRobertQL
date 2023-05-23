@@ -14,6 +14,11 @@ import time
 import uuid
 import requests
 
+import notify
+
+# 通知内容
+message = []
+
 
 def get_cookies():
     if os.environ.get("DDNSTO_COOKIE"):
@@ -85,24 +90,29 @@ def select_list(cookie):
             # 判断
             if 201 == status_code:
                 print("😊您已成功续期")
+                message.append("😊您已成功续期")
                 break
             else:
                 print("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: ", repose.text)
+                message.append(
+                    f"😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: {repose.text}")
                 break
         except Exception as e:
             if e.args[0] == 'id':
                 print("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
+                message.append("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
                 break
             else:
                 print("😒您续期失败,正在尝试重新续期", e)
+                message.append(f"😒您续期失败,正在尝试重新续期{e}")
                 time.sleep(60)
         finally:
             session.close()
 
 
 # 使用函数封装重复的代码
-def print_message(pr_message):
-    print(f'🍪{pr_message}')
+def print_message(re_message):
+    print(f'🍪{re_message}')
 
 
 if __name__ == "__main__":
@@ -112,7 +122,13 @@ if __name__ == "__main__":
     print_message('获取Cookie成功')
     if cookie:
         # 使用三元表达式简化条件判断
-        message = '开始调用脚本' if select_list(cookie) else '调用脚本失败'
-        print_message(message)
+        pr_message = '开始调用脚本' if select_list(cookie) else '调用脚本失败'
+        print_message(pr_message)
+        message.append(pr_message)
     else:
         print_message('cookie为空，请查看您的配置文件。')
+        message.append('cookie为空，请查看您的配置文件。')
+
+        # 发送通知
+        msg = '\n'.join(message)
+        notify.send("天翼网盘", msg)
