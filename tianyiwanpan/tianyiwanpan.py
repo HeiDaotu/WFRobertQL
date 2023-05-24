@@ -214,7 +214,6 @@ def process_user(user, num):
 
 def main():
     logging.info("第一次会生成tianyiwanpanconfig.json文件，请在文件中填写对应的值，将switch改为true才会运行")
-    init_logger()  # 初始化日志系统
     # 判断是否存在文件
     if not os.path.exists('tianyiwanpanconfig.json'):
         create_config_file()
@@ -226,6 +225,7 @@ def main():
 
 
 if __name__ == '__main__':
+    init_logger()  # 初始化日志系统
     main()
     # 发送通知
     msg = '\n'.join(message)
