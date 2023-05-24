@@ -14,6 +14,9 @@
 | [小黑盒](https://www.xiaoheihe.cn/home)         | ✅              | ❌            | ✅        | 每日签到得盒币                                 |
 | [好游快报](https://www.3839.com/)               | ✅              | ❌            | ✅        | 每日爆米花浇水                                 |
 | [交易猫](https://www.jiaoyimao.com/)            | ✅              | ❌            | ✅        | 每日签到得积分                                 |
+| [网易云游戏](https://cg.163.com/#/mobile)       | ✅              | ❌            | ✅        | 每日签到获取使用时间和成长值                   |
+
+
 
 
 
