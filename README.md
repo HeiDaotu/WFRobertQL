@@ -12,6 +12,10 @@
 | [天翼网盘](https://cloud.189.cn/web/login.html) | ❌              | ✅            | ✅        | 每日签到抽奖得空间                             |
 | [DDNSTO](https://www.ddnsto.com/)               | ✅              | ❌            | ✅        | 自动续费7天免费套餐                            |
 | [小黑盒](https://www.xiaoheihe.cn/home)         | ✅              | ❌            | ✅        | 每日签到得盒币                                 |
+| [好游快报](https://www.3839.com/)               | ✅              | ❌            | ✅        | 每日爆米花浇水                                 |
+| [交易猫](https://www.jiaoyimao.com/)            | ✅              | ❌            | ✅        | 每日签到得积分                                 |
+
+
 
 ### 青龙
 
