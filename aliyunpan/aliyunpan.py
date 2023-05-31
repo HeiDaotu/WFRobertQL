@@ -99,21 +99,21 @@ def update_token_file(num: int, data: dict):
     :param num: 第几个用户
     """
     num -= 1
-    with open('aliconfig.json', 'r', encoding="utf-8") as f:
+    with open('aliConfig.json', 'r', encoding="utf-8") as f:
         config = json.load(f)
     config[num] = data
-    with open('aliconfig.json', 'w', encoding="utf-8") as f:
+    with open('aliConfig.json', 'w', encoding="utf-8") as f:
         f.write(json.dumps(config, indent=4, ensure_ascii=False))
 
 
 def main():
     # 判断是否存在文件
-    if not os.path.exists('aliconfig.json'):
+    if not os.path.exists('aliConfig.json'):
         base = [{"refresh_token": "用户1refresh_token", "is": 0}, {"refresh_token": "用户2refresh_token", "is": 0}]
-        with open('aliconfig.json', 'w', encoding="utf-8") as f:
+        with open('aliConfig.json', 'w', encoding="utf-8") as f:
             f.write(json.dumps(base, indent=4, ensure_ascii=False))
     init_logger()  # 初始化日志系统
-    with open('aliconfig.json', 'r', encoding="utf-8") as f:
+    with open('aliConfig.json', 'r', encoding="utf-8") as f:
         config = json.load(f)
     num = 0
     for user in config:

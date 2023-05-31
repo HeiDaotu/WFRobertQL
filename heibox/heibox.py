@@ -154,17 +154,17 @@ class XiaoHeiHe:
 
 
 def main():
-    logging.info("第一次会生成heiboxconfig.json文件，请在文件中填写对应的值，将switch改为true才会运行")
+    logging.info("第一次会生成heiboxConfig.json文件，请在文件中填写对应的值，将switch改为true才会运行")
     init_logger()  # 初始化日志系统
     # 判断是否存在文件
-    if not os.path.exists('heiboxconfig.json'):
+    if not os.path.exists('heiboxConfig.json'):
         base = [{"switch": False, "cookie": "用户1cookie", "imei": "用户1imei", "heybox_id": "用户1heybox_id",
                  "version": "1.3.229"},
                 {"switch": False, "cookie": "用户2cookie", "imei": "用户2imei", "heybox_id": "用户2heybox_id",
                  "version": "1.3.229"}]
-        with open('heiboxconfig.json', 'w', encoding="utf-8") as f:
+        with open('heiboxConfig.json', 'w', encoding="utf-8") as f:
             f.write(json.dumps(base, indent=4, ensure_ascii=False))
-    with open('heiboxconfig.json', 'r', encoding="utf-8") as f:
+    with open('heiboxConfig.json', 'r', encoding="utf-8") as f:
         config = json.load(f)
     num = 0
     for user in config:

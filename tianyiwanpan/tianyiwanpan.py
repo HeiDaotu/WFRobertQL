@@ -193,12 +193,12 @@ class TianYiYunPan:
 def create_config_file():
     base = [{"switch": False, "username": "用户1账户", "password": "用户1密码"},
             {"switch": False, "username": "用户2账户", "password": "用户2密码"}]
-    with open('tianyiwanpanconfig.json', 'w', encoding="utf-8") as f:
+    with open('tianyiwanpanConfig.json', 'w', encoding="utf-8") as f:
         f.write(json.dumps(base, indent=4, ensure_ascii=False))
 
 
 def read_config_file():
-    with open('tianyiwanpanconfig.json', 'r', encoding="utf-8") as f:
+    with open('tianyiwanpanConfig.json', 'r', encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -213,9 +213,9 @@ def process_user(user, num):
 
 
 def main():
-    logging.info("第一次会生成tianyiwanpanconfig.json文件，请在文件中填写对应的值，将switch改为true才会运行")
+    logging.info("第一次会生成tianyiwanpanConfig.json文件，请在文件中填写对应的值，将switch改为true才会运行")
     # 判断是否存在文件
-    if not os.path.exists('tianyiwanpanconfig.json'):
+    if not os.path.exists('tianyiwanpanConfig.json'):
         create_config_file()
     config = read_config_file()
     num = 0
