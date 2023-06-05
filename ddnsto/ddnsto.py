@@ -75,15 +75,23 @@ def select_list(cookie):
                 repose = session.post(url, json=body, verify=False, timeout=5)
             except Exception as exc:
                 print(f"😒cookie有问题，请使用新的cookie：{exc}")
+            # 延迟2s
+            time.sleep(2)
             text_id = repose.json()["id"]
             session.get(f"{url}{text_id}/", verify=False, timeout=5)
+            # 延迟2s
+            time.sleep(2)
             routers_repose = session.get(f"{routers_url}?limit=5&offset=0", verify=False, timeout=5)
+            # 延迟2s
+            time.sleep(2)
             routers_id = routers_repose.json()["results"][0]['id']
 
             body_routers = {
                 "plan_ids_to_add": [text_id],
                 "server": 1
             }
+            # 延迟2s
+            time.sleep(2)
             session.patch(f"{routers_url}{routers_id}/", json=body_routers, verify=False, timeout=5)
             status_code = repose.status_code
 
@@ -91,21 +99,20 @@ def select_list(cookie):
             if 201 == status_code:
                 print("😊您已成功续期")
                 message.append("😊您已成功续期")
-                break
+                return status_code
             else:
                 print("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: ", repose.text)
                 message.append(
                     f"😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: {repose.text}")
-                break
         except Exception as e:
             if e.args[0] == 'id':
                 print("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
                 message.append("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
-                break
             else:
                 print("😒您续期失败,正在尝试重新续期", e)
                 message.append(f"😒您续期失败,正在尝试重新续期{e}")
                 time.sleep(60)
+                continue
         finally:
             session.close()
 
@@ -121,8 +128,12 @@ if __name__ == "__main__":
     cookie = get_cookies()
     print_message('获取Cookie成功')
     if cookie:
-        # 使用三元表达式简化条件判断
-        pr_message = '开始调用脚本' if select_list(cookie) else '调用脚本失败'
+        status_code = select_list(cookie)
+        if 201 == status_code:
+            pr_message = '调用脚本成功'
+        else:
+            pr_message = '调用脚本失败'
+
         print_message(pr_message)
         message.append(pr_message)
     else:
