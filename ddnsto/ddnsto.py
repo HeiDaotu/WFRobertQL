@@ -103,7 +103,8 @@ def select_list(cookie):
                 message.append("😊您已成功续期")
                 return status_code
             else:
-                logging.error("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: ", repose.text)
+                logging.error("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: ",
+                              repose.text)
                 message.append(
                     f"😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: {repose.text}")
                 return status_code
@@ -140,15 +141,13 @@ if __name__ == "__main__":
         if key:
             status_code = select_list(key)
             if 201 == status_code:
-                pr_message = '调用脚本成功'
+                message.append(f'😊第{index}个用户调用脚本成功')
             else:
-                pr_message = '调用脚本失败'
-
-            print_message(pr_message)
-            message.append(pr_message)
+                message.append(f'😢第{index}个用户调用脚本失败')
         else:
             print_message('cookie为空，请查看您的配置文件。')
             message.append('cookie为空，请查看您的配置文件。')
+        logging.info("-------------------------------------------")
 
     # 发送通知
     msg = '\n'.join(message)
