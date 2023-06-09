@@ -13,8 +13,10 @@ import os
 import time
 import uuid
 import requests
+import logging
 
 import notify
+from init_logger import init_logger
 
 # 通知内容
 message = []
@@ -22,14 +24,14 @@ message = []
 
 def get_cookies():
     if os.environ.get("DDNSTO_COOKIE"):
-        print("🍪已获取并使用Env环境 Cookie")
+        logging.info("🍪已获取并使用Env环境 Cookie")
         return os.environ.get("DDNSTO_COOKIE")
     return None
 
 
 def select_list(cookie):
     global repose
-    print('🍕开始获取csrftoken')
+    logging.info('🍕开始获取csrftoken')
     # 获取令牌
     csrftoken = {}
     for line in cookie.split(';'):
@@ -66,15 +68,15 @@ def select_list(cookie):
         'Host': 'www.ddnsto.com'
     })
 
-    print('🍿开始调用接口地址')
+    logging.info('🍿开始调用接口地址')
     for i in range(3):
-        print(f'😎开始第{i + 1}次调用接口，最多调用3次')
+        logging.info(f'😎开始第{i + 1}次调用接口，最多调用3次')
         try:
             try:
                 # 关闭SSL验证
                 repose = session.post(url, json=body, verify=False, timeout=5)
             except Exception as exc:
-                print(f"😒cookie有问题，请使用新的cookie：{exc}")
+                logging.error(f"😒cookie有问题，请使用新的cookie：{exc}")
             # 延迟2s
             time.sleep(2)
             text_id = repose.json()["id"]
@@ -97,20 +99,20 @@ def select_list(cookie):
 
             # 判断
             if 201 == status_code:
-                print("😊您已成功续期")
+                logging.info("😊您已成功续期")
                 message.append("😊您已成功续期")
                 return status_code
             else:
-                print("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: ", repose.text)
+                logging.error("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: ", repose.text)
                 message.append(
                     f"😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: {repose.text}")
                 return status_code
         except Exception as e:
             if e.args[0] == 'id':
-                print("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
+                logging.error("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
                 message.append("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
             else:
-                print("😒您续期失败,请更换cookie重试,正在尝试重新续期", e)
+                logging.error("😒您续期失败,请更换cookie重试,正在尝试重新续期", e)
                 message.append(f"😒您续期失败,请更换cookie重试,正在尝试重新续期{e}")
                 time.sleep(60)
                 continue
@@ -120,27 +122,34 @@ def select_list(cookie):
 
 # 使用函数封装重复的代码
 def print_message(re_message):
-    print(f'🍪{re_message}')
+    logging.info(f'🍪{re_message}')
 
 
 if __name__ == "__main__":
+    # 日志格式化输出，不加  ql无法打出日志
+    init_logger()
     # 使用format方法格式化字符串
     print_message('开始获取Cookie')
-    cookie = get_cookies()
+    cookies = get_cookies()
     print_message('获取Cookie成功')
-    if cookie:
-        status_code = select_list(cookie)
-        if 201 == status_code:
-            pr_message = '调用脚本成功'
+
+    cookie = cookies.split(
+        '&')
+    for index, key in enumerate(cookie):
+        logging.info("😊开始处理第" + str(index + 1) + "个用户")
+        if key:
+            status_code = select_list(key)
+            if 201 == status_code:
+                pr_message = '调用脚本成功'
+            else:
+                pr_message = '调用脚本失败'
+
+            print_message(pr_message)
+            message.append(pr_message)
         else:
-            pr_message = '调用脚本失败'
+            print_message('cookie为空，请查看您的配置文件。')
+            message.append('cookie为空，请查看您的配置文件。')
 
-        print_message(pr_message)
-        message.append(pr_message)
-    else:
-        print_message('cookie为空，请查看您的配置文件。')
-        message.append('cookie为空，请查看您的配置文件。')
-
-        # 发送通知
-        msg = '\n'.join(message)
-        notify.send("ddnsto", msg)
+    # 发送通知
+    msg = '\n'.join(message)
+    notify.send("ddnsto", msg)
