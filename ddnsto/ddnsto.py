@@ -115,7 +115,7 @@ def select_list(cookie):
             else:
                 logging.error("😒您续期失败,请更换cookie重试,正在尝试重新续期", e)
                 message.append(f"😒您续期失败,请更换cookie重试,正在尝试重新续期{e}")
-                time.sleep(60)
+                time.sleep(10)
                 continue
         finally:
             session.close()
@@ -141,9 +141,9 @@ if __name__ == "__main__":
         if key:
             status_code = select_list(key)
             if 201 == status_code:
-                message.append(f'😊第{index}个用户调用脚本成功')
+                message.append(f'😊第{index + 1}个用户调用脚本成功')
             else:
-                message.append(f'😢第{index}个用户调用脚本失败')
+                message.append(f'😢第{index + 1}个用户调用脚本失败')
         else:
             print_message('cookie为空，请查看您的配置文件。')
             message.append('cookie为空，请查看您的配置文件。')
