@@ -222,6 +222,7 @@ def main():
     for user in config:
         num += 1
         process_user(user, num)
+        message.append("\n")
 
 
 if __name__ == '__main__':
