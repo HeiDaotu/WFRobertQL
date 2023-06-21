@@ -89,7 +89,7 @@ def sign_in(access_token: str) -> bool:
     logging.info(f'😊签到成功, 本月累计签到 {data["result"]["signInCount"]} 天.')
     logging.info(f'😊本次签到 {reward}')
     message.append(f'😊签到成功, 本月累计签到 {data["result"]["signInCount"]} 天.')
-    message.append(f'😊本次签到 {reward}\n\n')
+    message.append(f'😊本次签到 {reward}\n')
     return True
 
 
