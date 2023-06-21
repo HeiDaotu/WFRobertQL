@@ -147,7 +147,8 @@ if __name__ == "__main__":
         else:
             print_message('cookie为空，请查看您的配置文件。')
             message.append('cookie为空，请查看您的配置文件。')
-        logging.info("-------------------------------------------")
+        logging.info(f'\n')
+        message.append(f'\n')
 
     # 发送通知
     msg = '\n'.join(message)
