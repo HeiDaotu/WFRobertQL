@@ -17,8 +17,6 @@ import copy
 import logging
 import random
 
-import smtplib
-from email.mime.text import MIMEText
 from init_logger import init_logger
 
 import notify
@@ -190,45 +188,6 @@ def client_sign(bduss, tbs, fid, kw):
     return res
 
 
-# def send_email(sign_list):
-#     if ('HOST' not in ENV or 'FROM' not in ENV or 'TO' not in ENV or 'AUTH' not in ENV):
-#         logging.error("🎈未配置邮箱")
-#         return
-#     HOST = ENV['HOST']
-#     FROM = ENV['FROM']
-#     TO = ENV['TO'].split('#')
-#     AUTH = ENV['AUTH']
-#     length = len(sign_list)
-#     subject = f"{time.strftime('%Y-%m-%d', time.localtime())} 签到{length}个贴吧"
-#     body = """
-#     <style>
-#     .child {
-#       background-color: rgba(173, 216, 230, 0.19);
-#       padding: 10px;
-#     }
-#
-#     .child * {
-#       margin: 5px;
-#     }
-#     </style>
-#     """
-#     for i in sign_list:
-#         body += f"""
-#         <div class="child">
-#             <div class="name"> 贴吧名称: {i['name']}</div>
-#             <div class="slogan"> 贴吧简介: {i['slogan']}</div>
-#         </div>
-#         <hr>
-#         """
-#     msg = MIMEText(body, 'html', 'utf-8')
-#     msg['subject'] = subject
-#     smtp = smtplib.SMTP()
-#     smtp.connect(HOST)
-#     smtp.login(FROM, AUTH)
-#     smtp.sendmail(FROM, TO, msg.as_string())
-#     smtp.quit()
-
-
 def main():
     global favorites
     if ('BDUSS' not in ENV):
@@ -249,10 +208,10 @@ def main():
         else:
             logging.info(f"第{str(n + 1)}个用户😎没有待签到的贴吧，请明天再来签到。")
             message.append(f"第{str(n + 1)}个用户😎没有待签到的贴吧，请明天再来签到。")
-        message.append(f"第{str(n + 1)}个用户签到{len(favorites)}个贴吧")
-    # send_email(favorites)
+        message.append(f"第{str(n + 1)}个用户签到{len(favorites)}个贴吧\n")
 
     logging.info("👍所有用户签到结束")
+    message.append(f"\n👍所有用户签到结束")
 
 
 if __name__ == '__main__':
