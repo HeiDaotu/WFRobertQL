@@ -69,56 +69,52 @@ def select_list(cookie):
     })
 
     logging.info('🍿开始调用接口地址')
-    for i in range(3):
-        logging.info(f'😎开始第{i + 1}次调用接口，最多调用3次')
+    try:
         try:
-            try:
-                # 关闭SSL验证
-                repose = session.post(url, json=body, verify=False, timeout=5)
-            except Exception as exc:
-                logging.error(f"😒cookie有问题，请使用新的cookie：{exc}")
-            # 延迟2s
-            time.sleep(2)
-            text_id = repose.json()["id"]
-            session.get(f"{url}{text_id}/", verify=False, timeout=5)
-            # 延迟2s
-            time.sleep(2)
-            routers_repose = session.get(f"{routers_url}?limit=5&offset=0", verify=False, timeout=5)
-            # 延迟2s
-            time.sleep(2)
-            routers_id = routers_repose.json()["results"][0]['id']
+            # 关闭SSL验证
+            repose = session.post(url, json=body, verify=False, timeout=5)
+        except Exception as exc:
+            logging.error(f"😒cookie有问题，请使用新的cookie：{exc}")
+        # 延迟2s
+        time.sleep(2)
+        text_id = repose.json()["id"]
+        session.get(f"{url}{text_id}/", verify=False, timeout=5)
+        # 延迟2s
+        time.sleep(2)
+        routers_repose = session.get(f"{routers_url}?limit=5&offset=0", verify=False, timeout=5)
+        # 延迟2s
+        time.sleep(2)
+        routers_id = routers_repose.json()["results"][0]['id']
 
-            body_routers = {
-                "plan_ids_to_add": [text_id],
-                "server": 1
-            }
-            # 延迟2s
-            time.sleep(2)
-            session.patch(f"{routers_url}{routers_id}/", json=body_routers, verify=False, timeout=5)
-            status_code = repose.status_code
+        body_routers = {
+            "plan_ids_to_add": [text_id],
+            "server": 1
+        }
+        # 延迟2s
+        time.sleep(2)
+        session.patch(f"{routers_url}{routers_id}/", json=body_routers, verify=False, timeout=5)
+        status_code = repose.status_code
 
-            # 判断
-            if 201 == status_code:
-                logging.info("😊您已成功续期")
-                message.append("😊您已成功续期")
-                return status_code
-            else:
-                logging.error("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: ",
-                              repose.text)
-                message.append(
-                    f"😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: {repose.text}")
-                return status_code
-        except Exception as e:
-            if e.args[0] == 'id':
-                logging.error("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
-                message.append("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
-            else:
-                logging.error("😒您续期失败,请更换cookie重试,正在尝试重新续期", e)
-                message.append(f"😒您续期失败,请更换cookie重试,正在尝试重新续期{e}")
-                time.sleep(10)
-                continue
-        finally:
-            session.close()
+        # 判断
+        if 201 == status_code:
+            logging.info("😊您已成功续期")
+            message.append("😊您已成功续期")
+            return status_code
+        else:
+            logging.error("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: ",
+                          repose.text)
+            message.append(
+                f"😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: {repose.text}")
+            return status_code
+    except Exception as e:
+        if e.args[0] == 'id':
+            logging.error("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
+            message.append("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
+        else:
+            logging.error("😒您续期失败,请更换cookie重试:", e)
+            message.append(f"😒您续期失败,请更换cookie重试:{e}")
+    finally:
+        session.close()
 
 
 # 使用函数封装重复的代码
@@ -138,11 +134,15 @@ if __name__ == "__main__":
         '&')
     for index, key in enumerate(cookie):
         logging.info("😊开始处理第" + str(index + 1) + "个用户")
+        message.append("😊开始处理第" + str(index + 1) + "个用户")
         if key:
-            status_code = select_list(key)
-            if 201 == status_code:
-                message.append(f'😊第{index + 1}个用户调用脚本成功')
-            else:
+            try:
+                status_code = select_list(key)
+                if 201 == status_code:
+                    message.append(f'😊第{index + 1}个用户调用脚本成功')
+                else:
+                    message.append(f'😢第{index + 1}个用户调用脚本失败')
+            except Exception as exc:
                 message.append(f'😢第{index + 1}个用户调用脚本失败')
         else:
             print_message('cookie为空，请查看您的配置文件。')
