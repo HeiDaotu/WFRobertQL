@@ -69,3 +69,7 @@ aiohttp
 #### 成品挂机平台
 
 [WFRobert挂机平台](https://script.heitu.eu.org/#/)这我自己搭建的成品脚本站，可以直接在里面运行脚本，同样具体请查看文档：[参考文档](https://heidaotu.github.io/ScriptDocument/reference/)
+
+### 特别声明:
+
+本仓库发布的项目中涉及的任何解锁和解密分析脚本，仅用于测试和学习研究，禁止用于商业用途，不能保证其准确性，完整性和有效性，请根据情况自行判断。
