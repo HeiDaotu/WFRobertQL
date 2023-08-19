@@ -40,6 +40,7 @@ ping3
 jieba
 PyExecJS
 aiohttp
+rsa
 ```
 
 </details>
