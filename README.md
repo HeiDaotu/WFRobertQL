@@ -45,6 +45,17 @@ rsa
 
 </details>
 
+<details>
+<summary>NodeJs</summary>
+
+
+```tex
+node-rsa
+crypto-js
+```
+
+</details>
+
 ![image-20230413142448646](https://fastly.jsdelivr.net/gh/HeiDaotu/img-bucket/img/202304131425904.png)
 
 #### 订阅管理
