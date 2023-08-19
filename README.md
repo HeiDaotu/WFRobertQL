@@ -27,6 +27,17 @@
 点击青龙面板的依赖管理——>新建依赖——>选择Python3、自动拆分选择是、复制以下的依赖填到名称里——>点击确定，等待安装完成，已经有的依赖就不用安装了。
 
 <details>
+<summary>NodeJs依赖</summary>
+
+
+```tex
+node-rsa
+crypto-js
+```
+
+</details>
+
+<details>
 <summary>Python3依赖</summary>
 
 
@@ -41,17 +52,6 @@ jieba
 PyExecJS
 aiohttp
 rsa
-```
-
-</details>
-
-<details>
-<summary>NodeJs</summary>
-
-
-```tex
-node-rsa
-crypto-js
 ```
 
 </details>
