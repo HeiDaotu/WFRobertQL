@@ -1,5 +1,7 @@
 import logging
 from typing import NoReturn
+import time
+import random
 
 
 def init_logger() -> NoReturn:
@@ -21,5 +23,14 @@ def init_logger() -> NoReturn:
     log.addHandler(ch)
 
 
+def random_delay():
+    # 生成10秒到10分钟之间的随机延迟时间
+    delay = random.uniform(10, 600)
+    time.sleep(delay)
+
+
 if __name__ == '__main__':
+    # 随机延迟
+    random_delay()
+    # 初始化日志
     init_logger()
