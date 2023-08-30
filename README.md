@@ -1,22 +1,21 @@
 ## 本项目是这是WF·Robert的脚本库，暂时只适配青龙使用，请释放你的时间，让脚本来代替你的工作。
 
 
-目前支持：
+<center> <font face="黑体" size=5>目前支持</font></center>
 
-| 应用                                            | 是否需要cookie | 是否需要密码 | 是否可用 | 功能                                           |
-| ----------------------------------------------- | -------------- | ------------ | -------- | ---------------------------------------------- |
-| [京东](https://m.jd.com)                        | ✅              | ❌            | ✅        | 每日执行京东各种脚本（京东脚本来自其他开源库） |
-| [百度贴吧](https://tieba.baidu.com)             | ✅              | ❌            | ✅        | 每日自动签到所有贴吧                           |
-| [吾爱破解](https://www.52pojie.cn/)             | ✅              | ❌            | ✅        | 每日签到                                       |
-| [阿里云盘](https://www.aliyundrive.com/)        | ✅              | ❌            | ✅        | 每日签到得奖励                                 |
-| [天翼网盘](https://cloud.189.cn/web/login.html) | ❌              | ✅            | ✅        | 每日签到抽奖得空间                             |
-| [DDNSTO](https://www.ddnsto.com/)               | ✅              | ❌            | ✅        | 自动续费7天免费套餐                            |
-| [小黑盒](https://www.xiaoheihe.cn/home)         | ✅              | ❌            | ✅        | 每日签到得盒币                                 |
-| [好游快报](https://www.3839.com/)               | ✅              | ❌            | ✅        | 每日爆米花浇水                                 |
-| [交易猫](https://www.jiaoyimao.com/)            | ✅              | ❌            | ✅        | 每日签到得积分                                 |
-| [网易云游戏](https://cg.163.com/#/mobile)       | ✅              | ❌            | ✅        | 每日签到获取使用时间和成长值                   |
-
-
+| 应用                                            | 是否需要cookie | 是否需要密码 | 是否可用 | 功能                                                         |
+| ----------------------------------------------- | -------------- | ------------ | -------- | ------------------------------------------------------------ |
+| [京东](https://m.jd.com)                        | ✅              | ❌            | ✅        | 每日执行京东各种脚本（京东脚本来自其他开源库[faker2](https://github.com/shufflewzc/faker2)） |
+| [百度贴吧](https://tieba.baidu.com)             | ✅              | ❌            | ✅        | 每日自动签到所有贴吧                                         |
+| [吾爱破解](https://www.52pojie.cn/)             | ✅              | ❌            | ✅        | 每日签到                                                     |
+| [阿里云盘](https://www.aliyundrive.com/)        | ✅              | ❌            | ✅        | 每日签到得奖励                                               |
+| [天翼网盘](https://cloud.189.cn/web/login.html) | ❌              | ✅            | ✅        | 每日签到抽奖得空间                                           |
+| [DDNSTO](https://www.ddnsto.com/)               | ✅              | ❌            | ✅        | 自动续费7天免费套餐                                          |
+| [小黑盒](https://www.xiaoheihe.cn/home)         | ✅              | ❌            | ✅        | 每日签到得盒币                                               |
+| [好游快报](https://www.3839.com/)               | ✅              | ❌            | ✅        | 每日爆米花浇水                                               |
+| [交易猫](https://www.jiaoyimao.com/)            | ✅              | ❌            | ✅        | 每日签到得积分                                               |
+| [网易云游戏](https://cg.163.com/#/mobile)       | ✅              | ❌            | ✅        | 每日签到获取使用时间和成长值                                 |
+| [邀玩（药丸）](https://invites.fun/)            | ✅              | ❌            | ✅        | 每日签到得药丸                                               |
 
 
 
@@ -30,6 +29,7 @@
 <summary>NodeJs依赖</summary>
 
 
+
 ```tex
 node-rsa
 crypto-js
@@ -39,6 +39,7 @@ crypto-js
 
 <details>
 <summary>Python3依赖</summary>
+
 
 
 ```tex
