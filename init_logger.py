@@ -1,10 +1,9 @@
 import logging
-from typing import NoReturn
 import time
 import random
 
 
-def init_logger() -> NoReturn:
+def init_logger():
     """
     初始化日志系统
 
