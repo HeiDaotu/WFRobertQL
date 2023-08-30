@@ -61,7 +61,7 @@ def sign_in(user_session):
         }
     }
 
-    response = requests.post(url, headers=headers, json=data, verify=False)
+    response = requests.post(url, headers=headers, json=data)
     status_code = response.status_code
     if 200 == status_code:
         res_parsed_data = json.loads(response.text)  # 将返回值JSON字符串解析为Python对象
@@ -92,7 +92,8 @@ def get_user_id(user_cookie):
         'Cookie': user_cookie
     }
 
-    response = requests.get(url, headers=headers, verify=False)  # 取消SSL验证
+    # response = requests.get(url, headers=headers, verify=False)  # 取消SSL验证
+    response = requests.get(url, headers=headers)  # 取消SSL验证
     soup = BeautifulSoup(response.content.decode('utf-8'), "html.parser")
     soup_data = soup.find('script', attrs={'id': 'flarum-json-payload'}).text
     parsed_data = json.loads(soup_data)  # 将JSON字符串解析为Python对象
