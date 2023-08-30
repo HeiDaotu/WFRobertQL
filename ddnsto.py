@@ -16,7 +16,7 @@ import requests
 import logging
 
 import notify
-import init_logger
+import initialize
 
 # 通知内容
 message = []
@@ -124,7 +124,7 @@ def print_message(re_message):
 
 if __name__ == "__main__":
     # 日志格式化输出，不加  ql无法打出日志
-    init_logger.init()
+    initialize.init()
     # 使用format方法格式化字符串
     print_message('开始获取Cookie')
     cookies = get_cookies()

@@ -18,7 +18,7 @@ import time
 import rsa
 import notify
 import requests
-import init_logger
+import initialize
 
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 
@@ -225,7 +225,7 @@ def main():
 
 
 if __name__ == '__main__':
-    init_logger.init()  # 初始化日志系统
+    initialize.init()  # 初始化日志系统
     main()
     # 发送通知
     msg = '\n'.join(message)
