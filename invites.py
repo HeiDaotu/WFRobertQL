@@ -24,7 +24,7 @@ def sign_in(user_session):
     if user_id is None:
         initialize.error_message("获取不到用户id，可能是cookie问题，请更新cookie")
         return None
-    initialize.info_message(f"用户：{user_id} 开始签到")
+    initialize.info_message(f"用户id：{user_id} 开始签到")
 
     url = f"https://invites.fun/api/users/{user_id}"
 
@@ -68,7 +68,7 @@ def sign_in(user_session):
         attributes = res_parsed_data["data"]["attributes"]
         username = attributes["username"]
         total_continuous_check_in = attributes["totalContinuousCheckIn"]
-        initialize.info_message(f"用户：{username} 签到成功，已经连续签到了:{total_continuous_check_in} 天了")
+        initialize.info_message(f"用户名字：{username} 签到成功，已经连续签到了:{total_continuous_check_in} 天了")
 
 
 def get_user_id(user_cookie):
