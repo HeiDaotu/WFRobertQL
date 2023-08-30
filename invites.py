@@ -63,7 +63,7 @@ def sign_in(user_session):
 
     response = requests.post(url, headers=headers, json=data, verify=False)
     status_code = response.status_code
-    if 200 or 201 == status_code:
+    if 200 == status_code:
         res_parsed_data = json.loads(response.text)  # 将返回值JSON字符串解析为Python对象
         attributes = res_parsed_data["data"]["attributes"]
         username = attributes["username"]
