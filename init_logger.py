@@ -28,7 +28,7 @@ def random_delay():
     time.sleep(delay)
 
 
-if __name__ == '__main__':
+def init():
     # 随机延迟
     random_delay()
     # 初始化日志

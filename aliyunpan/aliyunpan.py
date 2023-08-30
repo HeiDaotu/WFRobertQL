@@ -15,7 +15,7 @@ import os
 from datetime import datetime
 from time import mktime, time
 
-from init_logger import init_logger
+import init_logger
 import requests
 import notify
 
@@ -114,7 +114,7 @@ def main():
         base = [{"refresh_token": "用户1refresh_token", "is": 0}, {"refresh_token": "用户2refresh_token", "is": 0}]
         with open('aliConfig.json', 'w', encoding="utf-8") as f:
             f.write(json.dumps(base, indent=4, ensure_ascii=False))
-    init_logger()  # 初始化日志系统
+    init_logger.init()  # 初始化日志系统
     with open('aliConfig.json', 'r', encoding="utf-8") as f:
         config = json.load(f)
     num = 0

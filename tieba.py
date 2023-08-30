@@ -17,12 +17,12 @@ import copy
 import logging
 import random
 
-from init_logger import init_logger
+import init_logger
 
 import notify
 
 # 日志格式化输出，不加  ql无法打出日志
-init_logger()
+init_logger.init()
 
 # 通知内容
 message = []

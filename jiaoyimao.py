@@ -14,7 +14,7 @@ import logging
 import sys
 import requests
 import notify
-from init_logger import init_logger
+import init_logger
 
 # 通知内容
 message = []
@@ -63,7 +63,7 @@ def main():
 
 if __name__ == '__main__':
     # 初始化日志系统
-    init_logger()
+    init_logger.init()
     main()
     # 发送通知
     msg = '\n'.join(message)

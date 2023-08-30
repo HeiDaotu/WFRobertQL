@@ -15,11 +15,10 @@ import json
 import logging
 import random
 import time
-
 import requests
 
 import notify
-from init_logger import init_logger
+import init_logger
 
 # 通知内容
 message = []
@@ -155,7 +154,7 @@ class XiaoHeiHe:
 
 def main():
     logging.info("第一次会生成heiboxConfig.json文件，请在文件中填写对应的值，将switch改为true才会运行")
-    init_logger()  # 初始化日志系统
+    init_logger.init()  # 初始化日志系统
     # 判断是否存在文件
     if not os.path.exists('heiboxConfig.json'):
         base = [{"switch": False, "cookie": "用户1cookie", "imei": "用户1imei", "heybox_id": "用户1heybox_id",

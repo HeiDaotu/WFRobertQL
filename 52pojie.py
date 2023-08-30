@@ -15,14 +15,14 @@ import sys
 import urllib.parse
 import requests
 from bs4 import BeautifulSoup
-from init_logger import init_logger
+import init_logger
 import notify
 
 # 通知内容
 message = []
 
 # 初始化日志系统
-init_logger()
+init_logger.init()
 
 # 多cookie使用&分割
 logging.info("开始签到")
