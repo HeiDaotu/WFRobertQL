@@ -15,7 +15,6 @@ import uuid
 import requests
 import logging
 
-import notify
 import initialize
 
 # 通知内容
@@ -39,7 +38,7 @@ def select_list(cookie):
         csrftoken[key] = value
     csrftoken = csrftoken.get(' csrftoken')
     if csrftoken is not None:
-        print_message("csrftoken获取成功")
+        logging.info("🍪csrftoken获取成功")
 
     # 获取user_agent
     user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36 Edg/111.0.1661.62'
@@ -71,17 +70,16 @@ def select_list(cookie):
     logging.info('🍿开始调用接口地址')
     try:
         try:
-            # 关闭SSL验证
-            repose = session.post(url, json=body, verify=False, timeout=5)
+            repose = session.post(url, json=body, timeout=5)
         except Exception as exc:
             logging.error(f"😒cookie有问题，请使用新的cookie：{exc}")
         # 延迟2s
         time.sleep(2)
         text_id = repose.json()["id"]
-        session.get(f"{url}{text_id}/", verify=False, timeout=5)
+        session.get(f"{url}{text_id}/", timeout=5)
         # 延迟2s
         time.sleep(2)
-        routers_repose = session.get(f"{routers_url}?limit=5&offset=0", verify=False, timeout=5)
+        routers_repose = session.get(f"{routers_url}?limit=5&offset=0", timeout=5)
         # 延迟2s
         time.sleep(2)
         routers_id = routers_repose.json()["results"][0]['id']
@@ -92,64 +90,51 @@ def select_list(cookie):
         }
         # 延迟2s
         time.sleep(2)
-        session.patch(f"{routers_url}{routers_id}/", json=body_routers, verify=False, timeout=5)
+        session.patch(f"{routers_url}{routers_id}/", json=body_routers, timeout=5)
         status_code = repose.status_code
 
         # 判断
         if 201 == status_code:
-            logging.info("😊您已成功续期")
-            message.append("😊您已成功续期")
+            initialize.info_message("您已成功续期")
             return status_code
         else:
-            logging.error("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: ",
-                          repose.text)
-            message.append(
-                f"😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: {repose.text}")
+            initialize.error_message(
+                f"您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了,失败原因为: {repose.text}")
             return status_code
     except Exception as e:
         if e.args[0] == 'id':
-            logging.error("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
-            message.append("😒您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
+            initialize.error_message("您续期失败,这错误可能是来自于ddnsto官方的错误,因此不重复调用了")
         else:
-            logging.error("😒您续期失败,请更换cookie重试:", e)
-            message.append(f"😒您续期失败,请更换cookie重试:{e}")
+            initialize.error_message(f"您续期失败,请更换cookie重试:{e}")
     finally:
         session.close()
-
-
-# 使用函数封装重复的代码
-def print_message(re_message):
-    logging.info(f'🍪{re_message}')
 
 
 if __name__ == "__main__":
     # 日志格式化输出，不加  ql无法打出日志
     initialize.init()
     # 使用format方法格式化字符串
-    print_message('开始获取Cookie')
+    logging.info(f'🍪开始获取Cookie')
     cookies = get_cookies()
-    print_message('获取Cookie成功')
+    logging.info(f'🍪获取Cookie成功')
 
     cookie = cookies.split(
         '&')
     for index, key in enumerate(cookie):
-        logging.info("😊开始处理第" + str(index + 1) + "个用户")
-        message.append("😊开始处理第" + str(index + 1) + "个用户")
+        initialize.info_message("开始处理第" + str(index + 1) + "个用户")
         if key:
             try:
                 status_code = select_list(key)
                 if 201 == status_code:
-                    message.append(f'😊第{index + 1}个用户调用脚本成功')
+                    initialize.info_message(f'第{index + 1}个用户调用脚本成功')
                 else:
-                    message.append(f'😢第{index + 1}个用户调用脚本失败')
+                    initialize.error_message(f'第{index + 1}个用户调用脚本失败')
             except Exception as exc:
-                message.append(f'😢第{index + 1}个用户调用脚本失败')
+                initialize.error_message(f'第{index + 1}个用户调用脚本失败')
         else:
-            print_message('cookie为空，请查看您的配置文件。')
-            message.append('cookie为空，请查看您的配置文件。')
+            initialize.error_message("cookie为空，请查看您的配置文件。")
         logging.info(f'\n')
         message.append(f'\n')
 
     # 发送通知
-    msg = '\n'.join(message)
-    notify.send("ddnsto", msg)
+    initialize.send_notify("ddnsto")
