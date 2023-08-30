@@ -25,16 +25,6 @@ def init_logger():
     log.addHandler(ch)
 
 
-def random_delay():
-    """
-    生成10秒到10分钟之间的随机延迟时间
-
-    :return:
-    """
-    delay = random.uniform(10, 600)
-    time.sleep(delay)
-
-
 def info_message(message_content):
     """
     成功日志输出
@@ -84,7 +74,10 @@ def init():
 
     :return:
     """
-    # 随机延迟
-    random_delay()
+    logging.info("开启10秒到5分钟之间的随机延迟时间")
+    delay = random.uniform(10, 500)
+    logging.info(f"开启延迟，{delay}秒后执行代码")
+    time.sleep(delay)
+
     # 初始化日志
     init_logger()
