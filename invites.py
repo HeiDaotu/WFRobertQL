@@ -68,7 +68,7 @@ def sign_in(user_session):
         attributes = res_parsed_data["data"]["attributes"]
         username = attributes["username"]
         total_continuous_check_in = attributes["totalContinuousCheckIn"]
-        initialize.info_message(f"用户名字：{username} 签到成功，已经连续签到了:{total_continuous_check_in} 天了")
+        initialize.info_message(f"用户名字：{username} 签到成功，已经签到了:{total_continuous_check_in} 天了")
 
 
 def get_user_id(user_cookie):
@@ -103,7 +103,7 @@ def get_user_id(user_cookie):
 
 if __name__ == "__main__":
     initialize.init()  # 日志格式化输出，不加  ql无法打出日志
-    initialize.info_message("开始获取Cookie")
+    initialize.info_message("开始获取Cookie\n")
     if os.environ.get("INVITES_COOKIE"):
         cookies = os.environ.get("INVITES_COOKIE")
     else:
