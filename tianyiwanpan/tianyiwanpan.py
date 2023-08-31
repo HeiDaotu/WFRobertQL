@@ -4,10 +4,10 @@
 File: tianyiwanpan.py
 Author: WFRobert
 Date: 2023/5/19 11:57
-cron: 6 30 9 * * ?
+cron: 0 10 6 * * ?
 new Env('天翼网盘签到脚本');
 Description: 天翼网盘脚本,实现每日自动完成天翼网盘签到
-Update: 2023/5/19 更新cron
+Update: 2023/9/1 更新cron
 """
 import base64
 import os
@@ -16,16 +16,12 @@ import logging
 import re
 import time
 import rsa
-import notify
 import requests
 import initialize
 
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 
 B64MAP = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-
-# 通知内容
-message = []
 
 
 # 天翼云盘
@@ -147,11 +143,10 @@ class TianYiYunPan:
                 response = s.get(surl, headers=headers)
                 netdiskBonus = response.json()['netdiskBonus']
                 if (response.json()['isSign'] == "false"):
-                    logging.info(f"未签到，签到获得{netdiskBonus}M空间")
-                    message.append(f'{self.username} 签到成功,签到获得{netdiskBonus}M空间')
+                    initialize.info_message(f'{self.username} 已经签到过了,签到获得{netdiskBonus}M空间')
                 else:
-                    logging.info(f"已经签到过了，签到获得{netdiskBonus}M空间")
-                    message.append(f"{self.username} 已经签到过了，签到获得{netdiskBonus}M空间")
+                    initialize.info_message(f"{self.username} 签到成功，签到获得{netdiskBonus}M空间")
+
                 headers = {
                     'User-Agent': 'Mozilla/5.0 (Linux; Android 5.1.1; SM-G930K Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Ecloud/8.6.3 Android/22 clientId/355325117317828 clientModel/SM-G930K imsi/460071114317824 clientChannelId/qq proVersion/1.0.6',
                     "Referer": "https://m.cloud.189.cn/zhuanti/2016/sign/index.jsp?albumBackupOpened=1",
@@ -163,29 +158,26 @@ class TianYiYunPan:
                     logging.info(response.text)
                 else:
                     description = response.json()['description']
-                logging.info(f"抽奖获得{description}")
-                message.append(f"抽奖获得{description}")
+                initialize.info_message(f"第一次抽奖获得{description}M空间")
+
                 response = s.get(url2, headers=headers)
                 if ("errorCode" in response.text):
                     logging.info(response.text)
                 else:
                     description = response.json()['description']
-                logging.info(f"抽奖获得{description}")
-                message.append(f"抽奖获得{description}")
+                initialize.info_message(f"第二次抽奖获得{description}M空间")
+
                 response = s.get(url3, headers=headers)
                 if ("errorCode" in response.text):
                     logging.info(response.text)
                 else:
                     description = response.json()['description']
-                    logging.info(f"链接3抽奖获得{description}")
-                    message.append(f"链接3抽奖获得{description}")
+                    initialize.info_message(f"第三次抽奖获得{description}M空间")
             else:
-                logging.info("天翼云盘:账号或密码不能为空")
-                message.append("天翼云盘:账号或密码不能为空")
+                initialize.error_message("天翼云盘:账号或密码不能为空")
                 return "账号或密码不能为空"
         except Exception as er:
-            logging.info(f"天翼云盘:出现了错误:{er}")
-            message.append(f"天翼云盘:出现了错误:{er}")
+            initialize.error_message(f"天翼云盘:出现了错误:{er}")
             return f"出现了错误:{er}"
 
 
@@ -203,8 +195,7 @@ def read_config_file():
 
 def process_user(user, num):
     if not user['switch']:
-        logging.info(f'😢第{num}个 switch值为False, 不进行任务')
-        message.append(f'😢第{num}个 switch值为False, 不进行任务')
+        initialize.error_message(f'😢第{num}个 switch值为False，不进行任务，跳过该账号')
         return
     else:
         body = TianYiYunPan(user)
@@ -221,12 +212,10 @@ def main():
     for user in config:
         num += 1
         process_user(user, num)
-        message.append("\n")
+        initialize.message("\n")
 
 
 if __name__ == '__main__':
     initialize.init()  # 初始化日志系统
     main()
-    # 发送通知
-    msg = '\n'.join(message)
-    notify.send("天翼网盘", msg)
+    initialize.send_notify("天翼网盘")  # 发送通知
