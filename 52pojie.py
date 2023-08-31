@@ -4,10 +4,10 @@
 File: 52pojie.py
 Author: WFRobert
 Date: 2023/3/9 15:01
-cron: 6 14 9 * * ?
+cron: 0 25 6 * * ?
 new Env('52pojie自动签到脚本');
 Description: 52pojie自动签到,实现每日自动签到52pojie
-Update: 2023/3/9 更新cron
+Update: 2023/9/1 更新cron
 """
 import logging
 import os
