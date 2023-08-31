@@ -4,10 +4,10 @@
 File: jiaoyimao.py
 Author: WFRobert
 Date: 2023/5/24 8:57
-cron: 6 30 9 * * ?
+cron: 0 35 6 * * ?
 new Env('交易猫签到');
 Description: 交易猫脚本,实现每日自动签到
-Update: 2023/5/24 更新cron
+Update: 2023/9/1 更新cron
 """
 import os
 import logging
