@@ -4,10 +4,10 @@
 File: heibox.py
 Author: WFRobert
 Date: 2023/5/19 10:32
-cron: 6 25 9 * * ?
+cron: 0 15 6 * * ?
 new Env('小黑盒签到脚本');
 Description: 小黑盒脚本,实现每日自动完成小黑盒任务
-Update: 2023/5/19 更新cron
+Update: 2023/9/1 更新cron
 """
 import base64
 import os
