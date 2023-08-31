@@ -16,16 +16,7 @@ import time
 import copy
 import logging
 import random
-
 import initialize
-
-import notify
-
-# 日志格式化输出，不加  ql无法打出日志
-initialize.init()
-
-# 通知内容
-message = []
 
 # API_URL
 LIKIE_URL = "http://c.tieba.baidu.com/c/f/forum/like"
@@ -203,19 +194,14 @@ def main():
             for j in favorites:
                 time.sleep(random.randint(1, 5))
                 client_sign(i, tbs, j["id"], j["name"])
-            logging.info(f"👍完成第{str(n + 1)}个用户签到")
-            message.append(f"👍完成第{str(n + 1)}个用户签到")
+            initialize.info_message(f"完成第{str(n + 1)}个用户签到")
         else:
-            logging.info(f"第{str(n + 1)}个用户😎没有待签到的贴吧，请明天再来签到。")
-            message.append(f"第{str(n + 1)}个用户😎没有待签到的贴吧，请明天再来签到。")
-        message.append(f"第{str(n + 1)}个用户签到{len(favorites)}个贴吧\n")
-
-    logging.info("👍所有用户签到结束")
-    message.append(f"\n👍所有用户签到结束")
+            initialize.info_message(f"第{str(n + 1)}个用户没有待签到的贴吧，请明天再来签到。")
+        initialize.info_message(f"第{str(n + 1)}个用户签到{len(favorites)}个贴吧\n")
+    initialize.info_message("所有用户签到结束")
 
 
 if __name__ == '__main__':
+    initialize.init()  # 日志格式化输出
     main()
-    # 发送通知
-    msg = '\n'.join(message)
-    notify.send("百度贴吧签到", msg)
+    initialize.send_notify("百度贴吧签到")  # 发送通知
