@@ -4,10 +4,10 @@
 File: aliyunpan.py
 Author: WFRobert
 Date: 2023/5/17 19:09
-cron: 6 20 9 * * ?
+cron: 0 5 6 * * ?
 new Env('阿里云盘自动签到脚本');
 Description: 阿里云盘自动签到脚本,实现每日自动签到阿里云盘
-Update: 2023/5/17 更新cron
+Update: 2023/9/1 更新cron
 """
 import json
 import logging
