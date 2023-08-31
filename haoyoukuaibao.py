@@ -4,10 +4,10 @@
 File: haoyoukuaibao.py
 Author: WFRobert
 Date: 2023/5/24 9:27
-cron: 6 30 9 * * ?
+cron: 0 30 6 * * ?
 new Env('好游快报');
 Description: 好游快报脚本，每日爆米花浇水
-Update: 2023/5/24 更新cron
+Update: 2023/9/1 更新cron
 """
 import os
 import logging
