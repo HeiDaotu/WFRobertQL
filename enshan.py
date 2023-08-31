@@ -33,7 +33,7 @@ def get_points(cookie):
     }
 
     url = 'https://www.right.com.cn/FORUM/home.php?mod=spacecp&ac=credit&op=base'
-    response = requests.get(url, headers=headers, verify=False)
+    response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.content.decode('utf-8'), "html.parser")
     user_name = soup.find('a', attrs={'title': '访问我的空间'}).text  # 用户名
     points = soup.find('a', attrs={'id': 'extcreditmenu'}).text  # 目前积分
