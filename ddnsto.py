@@ -4,10 +4,10 @@
 File: ddnsto.py
 Author: WFRobert
 Date: 2023/2/16 10:01
-cron: 19 47 7 1/6 * ?
+cron: 0 0 6 1/6 * ?
 new Env('ddnsto自动续费免费7天的脚本');
 Description: 这是ddnsto自动续费免费7天的脚本,默认每过6天自动续费一次
-Update: 2023/2/16 更新cron
+Update: 2023/9/1 更新cron
 """
 import os
 import time
