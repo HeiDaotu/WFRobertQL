@@ -16,10 +16,6 @@ import urllib.parse
 import requests
 from bs4 import BeautifulSoup
 import initialize
-import notify
-
-# 通知内容
-message = []
 
 # 初始化日志系统
 initialize.init()
@@ -48,8 +44,7 @@ for cookie in cookies.split("&"):
         if "htVC_2132_auth" in key:
             cookie += "htVC_2132_auth=" + urllib.parse.quote(i.split("=")[1]) + ";"
     if not ('htVC_2132_saltkey' in cookie or 'htVC_2132_auth' in cookie):
-        logging.error(f"😢第{n}cookie中未包含htVC_2132_saltkey或htVC_2132_auth字段，请检查cookie")
-        message.append(f"😢第{n}cookie中未包含htVC_2132_saltkey或htVC_2132_auth字段，请检查cookie")
+        initialize.error_message(f"第{n}cookie中未包含htVC_2132_saltkey或htVC_2132_auth字段，请检查cookie")
         sys.exit()
     headers = {
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,"
@@ -74,19 +69,13 @@ for cookie in cookies.split("&"):
     r_data = BeautifulSoup(r.text, "html.parser")
     jx_data = r_data.find("div", id="messagetext").find("p").text
     if "您需要先登录才能继续本操作" in jx_data:
-        logging.error(f"第😢{n}个账号Cookie 失效")
-        message.append(f"第😢{n}个账号Cookie 失效\n")
+        initialize.error_message(f"第{n}个账号Cookie 失效\n")
     elif "恭喜" in jx_data:
-        logging.info(f"😊第{n}个账号签到成功")
-        message.append(f"😊第{n}个账号签到成功\n")
+        initialize.info_message(f"第{n}个账号签到成功\n")
     elif "不是进行中的任务" in jx_data:
-        logging.info(f"😊第{n}个账号今日已签到")
-        message.append(f"😊第{n}个账号今日已签到\n")
+        initialize.info_message(f"第{n}个账号今日已签到\n")
     else:
-        logging.info(f"😢第{n}个账号签到失败")
-        message.append(f"😢第{n}个账号签到失败\n")
+        initialize.error_message(f"第{n}个账号签到失败\n")
     n += 1
 
-# 发送通知
-msg = '\n'.join(message)
-notify.send("吾爱破解签到", msg)
+initialize.send_notify("吾爱破解")  # 发送通知
