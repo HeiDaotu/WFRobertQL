@@ -4,10 +4,10 @@
 File: invites.py
 Author: WFRobert
 Date: 2023/8/30 15:39
-cron: 0 49 7 1/6 * ?
+cron: 0 0 6 * * ?
 new Env('邀玩（药丸）自动签到');
 Description: 邀玩（药丸）自动签到
-Update: 2023/8/30 立项
+Update: 2023/9/1 更新cron
 """
 import os
 import sys
