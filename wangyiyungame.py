@@ -4,10 +4,10 @@
 File: wangyiyungame.py
 Author: WFRobert
 Date: 2023/5/24 10:50
-cron: 6 30 9 * * ?
+cron: 0 45 6 * * ?
 new Env('网易云游戏');
 Description: 网易云游戏，每日签到获取使用时间和成长值
-Update: 2023/5/24 更新cron
+Update: 2023/9/1 更新cron
 """
 import os
 import logging
