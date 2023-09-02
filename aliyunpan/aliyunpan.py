@@ -17,10 +17,6 @@ from time import mktime, time
 
 import initialize
 import requests
-import notify
-
-# 通知内容
-message = []
 
 
 def update_access_token(refresh_token: str) -> bool | dict:
@@ -86,10 +82,8 @@ def sign_in(access_token: str) -> bool:
         if not current_day['isReward']
         else f'获得 {current_day["reward"]["name"]} {current_day["reward"]["description"]}'
     )
-    logging.info(f'😊签到成功, 本月累计签到 {data["result"]["signInCount"]} 天.')
-    logging.info(f'😊本次签到 {reward}')
-    message.append(f'😊签到成功, 本月累计签到 {data["result"]["signInCount"]} 天.')
-    message.append(f'😊本次签到 {reward}\n')
+    initialize.info_message(f'签到成功, 本月累计签到 {data["result"]["signInCount"]} 天.')
+    initialize.info_message(f'本次签到 {reward}\n')
     return True
 
 
@@ -109,20 +103,25 @@ def update_token_file(num: int, data: dict):
 
 
 def main():
+    """
+    主函数
+
+    :return:
+    """
+    initialize.info_message(
+        "暂未开发自动领取奖励的功能，请自行在阿里网盘app领取签到奖励，注意次月会清空当月奖励，请在月底前将本月奖励领取")
     # 判断是否存在文件
     if not os.path.exists('aliConfig.json'):
         base = [{"refresh_token": "用户1refresh_token", "is": 0}, {"refresh_token": "用户2refresh_token", "is": 0}]
         with open('aliConfig.json', 'w', encoding="utf-8") as f:
             f.write(json.dumps(base, indent=4, ensure_ascii=False))
-    initialize.init()  # 初始化日志系统
     with open('aliConfig.json', 'r', encoding="utf-8") as f:
         config = json.load(f)
     num = 0
     for user in config:
         num += 1
         if user['is'] == 0:
-            logging.info(f'😢第{num}个 is值为0, 不进行任务')
-            message.append(f'😢第{num}个 is值为0, 不进行任务')
+            initialize.error_message(f'第{num}个 is值为0, 不进行任务')
             continue
         try:
             t = user['expired_at']
@@ -132,7 +131,7 @@ def main():
             t = 0
             access_token = None
             sign_time = None
-        message.append(f'😊第{num}个账户开始执行任务')
+        initialize.info_message(f'第{num}个账户开始执行任务')
         # 检查 access token 有效性
         if (
                 int(t) < int(time() * 1000)
@@ -151,12 +150,10 @@ def main():
             update_token_file(num, user)
         # 签到
         if sign_time == datetime.now().strftime('%Y-%m-%d'):
-            logging.info('😊今日已签到, 跳过.')
-            message.append('😊今日已签到, 跳过.')
+            initialize.info_message('今日已签到, 跳过')
             continue
         if not sign_in(user['access_token']):
-            logging.error('😢签到失败.')
-            message.append('😢签到失败.')
+            initialize.error_message('签到失败')
             continue
         else:
             user["sign_time"] = datetime.now().strftime('%Y-%m-%d')
@@ -164,7 +161,6 @@ def main():
 
 
 if __name__ == '__main__':
+    initialize.init()  # 初始化日志系统
     main()
-    # 发送通知
-    msg = '\n'.join(message)
-    notify.send("阿里云盘", msg)
+    initialize.send_notify("阿里云盘")  # 发送通知
