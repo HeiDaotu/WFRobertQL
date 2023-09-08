@@ -3,9 +3,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# 所有测试不上传  后缀为demo
+# 所有测试不上传
 *demo.py
 *demo.json
+demo*.py
+demo*.json
+
 # config
 aliyunpan/aliConfig.json
 heibox/heiboxConfig.json
