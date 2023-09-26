@@ -78,11 +78,11 @@ def get_user_id(user_cookie):
         'Host': 'invites.fun',
         'Connection': 'keep-alive',
         'Cache-Control': 'max-age=0',
-        'sec-ch-ua': '"Chromium";v="116", "Not)A;Brand";v="24", "Microsoft Edge";v="116"',
+        'sec-ch-ua': '"Microsoft Edge";v="117", "Not;A=Brand";v="8", "Chromium";v="117"',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,/;q=0.8,application/signed-exchange;v=b3;q=0.7',
         'sec-ch-ua-mobile': '?0',
         'Upgrade-Insecure-Requests': '1',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 Edg/116.0.1938.62',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.36',
         'sec-ch-ua-platform': '"Windows"',
         'Sec-Fetch-Site': 'same-origin',
         'Sec-Fetch-Mode': 'navigate',
@@ -92,8 +92,8 @@ def get_user_id(user_cookie):
         'Cookie': user_cookie
     }
 
-    # response = requests.get(url, headers=headers, verify=False)  # 取消SSL验证
-    response = requests.get(url, headers=headers)  # 取消SSL验证
+    response = requests.get(url, headers=headers)
+    response.encoding = 'utf-8'
     soup = BeautifulSoup(response.content.decode('utf-8'), "html.parser")
     soup_data = soup.find('script', attrs={'id': 'flarum-json-payload'}).text
     parsed_data = json.loads(soup_data)  # 将JSON字符串解析为Python对象
@@ -109,7 +109,6 @@ if __name__ == "__main__":
     else:
         initialize.error_message("在环境变量填写INVITES_COOKIE的值")
         sys.exit()  # 未获取到cookie，退出系统
-
     for cookie in cookies.split("&"):
         logging.info("🙂开始获取用户id")
         session = get_user_id(cookie)  # 获取用户session
