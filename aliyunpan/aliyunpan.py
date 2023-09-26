@@ -109,7 +109,7 @@ def main():
     :return:
     """
     initialize.info_message(
-        "暂未开发自动领取奖励的功能，请自行在阿里网盘app领取签到奖励，注意次月会清空当月奖励，请在月底前将本月奖励领取")
+        "暂未开发自动领取奖励的功能，请自行在阿里网盘app领取签到奖励，注意次月会清空当月奖励，请在月底前将本月奖励领取，首次运行会生成 aliconfig.json 配置文件，将自己获取的 refresh_token 填入，并将 is 的值修改为 1 即可！refresh_token 获取，先登陆网页版阿里云盘，打开 F12 在本地存储中点击网站，点击右边的 token ，就可以拿到 refresh_token 。")
     # 判断是否存在文件
     if not os.path.exists('aliConfig.json'):
         base = [{"refresh_token": "用户1refresh_token", "is": 0}, {"refresh_token": "用户2refresh_token", "is": 0}]
