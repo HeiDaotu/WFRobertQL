@@ -82,18 +82,17 @@ def get_user_id(user_cookie):
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,/;q=0.8,application/signed-exchange;v=b3;q=0.7',
         'sec-ch-ua-mobile': '?0',
         'Upgrade-Insecure-Requests': '1',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.36',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.43',
         'sec-ch-ua-platform': '"Windows"',
         'Sec-Fetch-Site': 'same-origin',
         'Sec-Fetch-Mode': 'navigate',
         'Sec-Fetch-Dest': 'empty',
-        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Encoding': 'gzip, deflate',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
         'Cookie': user_cookie
     }
 
     response = requests.get(url, headers=headers)
-    response.encoding = 'utf-8'
     soup = BeautifulSoup(response.content.decode('utf-8'), "html.parser")
     soup_data = soup.find('script', attrs={'id': 'flarum-json-payload'}).text
     parsed_data = json.loads(soup_data)  # 将JSON字符串解析为Python对象
