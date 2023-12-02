@@ -67,9 +67,6 @@ rsa
 
 环境变量每个脚本的变量名字不同，具体请查看文档：[参考文档](https://heidaotu.github.io/ScriptDocument/reference/)
 
-#### 成品挂机平台
-
-[WFRobert挂机平台](https://script.heidaotu.eu.org/#/)这我自己搭建的成品脚本站，可以直接在里面运行脚本，同样具体请查看文档：[参考文档](https://heidaotu.github.io/ScriptDocument/reference/)
 
 ### 特别声明:
 
