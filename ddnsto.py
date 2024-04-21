@@ -48,7 +48,8 @@ def select_list(cookie):
     routers_url = 'https://www.ddnsto.com/api/user/routers/'
     body = {
         "product_id": 2,
-        "uuid_from_client": ''.join(uuid.uuid1().__str__().split('-'))
+        "uuid_from_client": ''.join(uuid.uuid1().__str__().split('-')),
+        "from_supplier_code": ""
     }
 
     # 创建会话对象
